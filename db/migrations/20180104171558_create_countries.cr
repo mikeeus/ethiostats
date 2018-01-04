@@ -4,8 +4,9 @@ class CreateCountries::V20180104171558 < LuckyMigrator::Migration::V1
      add name : String
      add short : String
      add coordinates : String?
-     add aliases : String?
     end
+
+    execute "ALTER TABLE countries ADD aliases text[] NOT NULL DEFAULT array[]::text[];"
   end
 
   def rollback

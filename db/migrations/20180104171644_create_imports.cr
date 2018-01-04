@@ -5,17 +5,17 @@ class CreateImports::V20180104171644 < LuckyMigrator::Migration::V1
       belongs_to Origin, references: :countries, on_delete: :cascade
       belongs_to Consignment, references: :countries, on_delete: :cascade
 
-      add year : Int64
-      add month : Int64?
+      add year : Int32
+      add month : Int32?
       add cpc : String?
-      add quantity : Int64?
+      add quantity : Int32?
 
-      add mass_gross_kg : Int64?
-      add mass_net_kg : Int64
-      add cif_etb_cents : Int64
-      add cif_usd_cents : Int64
-      add tax_etb_cents : Int64?
-      add tax_usd_cents : Int64?
+      add mass_gross_kg : Int32?
+      add mass_net_kg : Int32
+      add cif_etb_cents : Int32
+      add cif_usd_cents : Int32
+      add tax_etb_cents : Int32?
+      add tax_usd_cents : Int32?
     end
 
     execute "CREATE INDEX ON imports (year, month);"
