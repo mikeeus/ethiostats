@@ -32,12 +32,14 @@ describe CountryImporter do
     CountryImporter.new(countries, aliases, show_progress: false).call
   end
 
-  it "imports countries with special characters" do
-    all_countries = CountryQuery.new.count
-    all_countries.should eq 3
+  Spec.after_each do
+    LuckyRecord::Repo.run { |db| db.exec "DELETE from countries;" }
   end
 
-  it "imports countries with their aliases" do
+  it "imports countries with special characters and their aliases" do
+    all_countries = CountryQuery.new.count
+    all_countries.should eq 3
+
     aliases = LuckyRecord::Repo.run do |db|
       db.query_all "SELECT aliases FROM countries WHERE name = 'South Korea'", as: Array(String)
     end.first
