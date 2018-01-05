@@ -1,5 +1,5 @@
 class Country < BaseModel
-  table :chapters do
+  table :countries do
     field name : String
     field short : String
     field coordinates : String?

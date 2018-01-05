@@ -1,0 +1,4 @@
+export LUCKY_ENV=test
+
+lucky db.create
+lucky db.migrate
