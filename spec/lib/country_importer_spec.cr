@@ -3,9 +3,9 @@ require "../../src/lib/country_importer.cr"
 
 data = YAML.parse <<-END
   countries:
-    - KR,	35.907757,	127.766922,	South Korea
-    - CI,	7.539989,	-5.54708,	Côte d'Ivoire
-    - FK,	-51.796253,	-59.523613,	Falkland Islands [Islas Malvinas]
+    - KR	35.907757	127.766922	South Korea
+    - CI	7.539989	-5.54708	Côte d'Ivoire
+    - FK	-51.796253	-59.523613	Falkland Islands [Islas Malvinas]
   aliases:
     South Korea:
       - Korea
@@ -39,6 +39,7 @@ describe CountryImporter do
   it "imports countries with special characters and their aliases" do
     all_countries = CountryQuery.new.count
     all_countries.should eq 3
+    CountryQuery.new.first.short.should eq "KR"
 
     aliases = LuckyRecord::Repo.run do |db|
       db.query_all "SELECT aliases FROM countries WHERE name = 'South Korea'", as: Array(String)
