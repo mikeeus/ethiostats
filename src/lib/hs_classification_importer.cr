@@ -1,11 +1,9 @@
-require "csv"
-require "progress"
+require "./import_progress_helpers.cr"
 
 class HsClassificationImporter
-  @bar = ProgressBar.new
-  @count = 0
+  include ImportProgressHelpers
 
-  def initialize(@csv : CSV, @length : Int32)
+  def initialize(@csv : CSV, @length : Int32, @show_progress = true)
     # skip first row after header
     @csv.next
   end
@@ -20,14 +18,6 @@ class HsClassificationImporter
         import_heading(row)
       end
       increment_progress
-    end
-  end
-
-  # Increment progress bar every 1/100th of the csv's length
-  private def increment_progress
-    @count += 1
-    if @count % (@length / 100) == 0
-      @bar.inc
     end
   end
 

@@ -1,11 +1,13 @@
-require "progress"
+require "./import_progress_helpers.cr"
 
 # Imports Country models from a YAML array of country objects and an map of
 # country aliases.
 class CountryImporter
+  include ImportProgressHelpers
+  @length = 0
+
   def initialize(@countries : Array(YAML::Any), @aliases : YAML::Any, @show_progress = true)
-    @bar = ProgressBar.new
-    @bar.width = 40
+    @length = @countries.size
   end
 
   def call
@@ -57,12 +59,5 @@ class CountryImporter
     end
 
     alias_arr.join(',')
-  end
-
-  # Only increment the progress bar if the @show_progress is true
-  private def increment_progress
-    if @show_progress
-      @bar.inc
-    end
   end
 end
