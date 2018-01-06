@@ -3,10 +3,7 @@ require "progress"
 # Imports Country models from a YAML array of country objects and an map of
 # country aliases.
 class CountryImporter
-  def initialize(countries : Array(YAML::Any), aliases : YAML::Any, show_progress = true)
-    @show_progress = show_progress
-    @countries = countries
-    @aliases = aliases
+  def initialize(@countries : Array(YAML::Any), @aliases : YAML::Any, @show_progress = true)
     @bar = ProgressBar.new
     @bar.width = 40
   end
