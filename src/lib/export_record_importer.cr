@@ -24,11 +24,23 @@ class ExportRecordImporter
   end
 
   private def import_row(row)
+    code = row[@labels["code"]]
+    hscode = HscodeQuery.new.code(code).first
+
+    destination_name = row[@labels["destination"]]
+    destination = CountryQuery.new.name(destination_name).first
+
+    params = default_params(row, code, hscode, destination)
+
+    if export_exists?(row, hscode, destination)
+      return
+    end
+
     if @year < 2007
-      export = ExportForm.new(default_params(row))
+      export = ExportForm.new(params)
     else @year > 2007 && @year < 2017
       export = ExportForm.new(
-        default_params(row).merge!(
+        params.merge!(
           {
             "month" => row[@labels["month"]],
             "mass_gross_kg" => to_cents(row[@labels["mass_gross"]]),
@@ -44,16 +56,10 @@ class ExportRecordImporter
     end
   end
 
-  private def default_params(row)
+  private def default_params(row, code, hscode, destination)
     if @default_params
       @default_params
     end
-
-    code = row[@labels["code"]]
-    destination_name = row[@labels["destination"]]
-
-    hscode = HscodeQuery.new.code(code).first
-    destination = CountryQuery.new.name(destination_name).first
 
     @default_params = {
       "hscode_id" => hscode.id.to_s,
@@ -120,8 +126,22 @@ class ExportRecordImporter
     end
   end
 
-  private def export_exists?(hscode_id, year, month, cpc, destination_id, fob_etb, fob_usd)
-    hash = Export.unique_hash(hscode_id, year, month, cpc, destination_id, fob_etb, fob_usd)
-    ExportQuery.new.find_by_hash()
+  private def export_exists?(row, hscode, destination)
+    if @labels["month"]?
+      month = row[@labels["month"]]
+    else
+      month = nil
+    end
+
+    if @labels["cpc"]?
+      cpc = row[@labels["cpc"]]
+    else
+      cpc = nil
+    end
+    fob_etb = row[@labels["fob_etb"]]
+    fob_usd = row[@labels["fob_usd"]]
+
+    hash = Export.build_hash(hscode.id.to_s, @year.to_s, month, cpc, destination.id.to_s, fob_etb, fob_usd)
+    ExportQuery.new.unique_hash(hash).first?
   end
 end

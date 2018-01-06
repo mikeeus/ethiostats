@@ -24,11 +24,26 @@ class ImportRecordImporter
   end
 
   private def import_row(row)
+    code = row[@labels["code"]]
+    hscode = HscodeQuery.new.code(code).first
+
+    origin_name = row[@labels["origin"]]
+    origin = CountryQuery.new.name(origin_name).first
+
+    consignment_name = row[@labels["consignment"]]
+    consignment = CountryQuery.new.name(consignment_name).first
+
+    params = default_params(row, code, hscode, origin, consignment)
+
+    if import_exists?(row, hscode, origin, consignment)
+      return
+    end
+
     if @year < 2007
-      import = ImportForm.new(default_params(row))
+      import = ImportForm.new(params)
     else @year > 2007 && @year < 2017
       import = ImportForm.new(
-        default_params(row).merge!(
+        params.merge!(
           {
             "month" => row[@labels["month"]],
             "mass_gross_kg" => to_cents(row[@labels["mass_gross"]]),
@@ -44,18 +59,10 @@ class ImportRecordImporter
     end
   end
 
-  private def default_params(row)
+  private def default_params(row, code, hscode, origin, consignment)
     if @default_params
       @default_params
     end
-
-    code = row[@labels["code"]]
-    origin = row[@labels["origin"]]
-    consignment = row[@labels["consignment"]]
-
-    hscode = HscodeQuery.new.code(code).first
-    origin = CountryQuery.new.name(origin).first
-    consignment = CountryQuery.new.name(consignment).first
 
     @default_params = {
       "hscode_id" => hscode.id.to_s,
@@ -126,7 +133,22 @@ class ImportRecordImporter
     end
   end
 
-  private def import_exists?(row)
-    ImportQuery.new.code(row[@labels[:code]]).first?
+  private def import_exists?(row, hscode, origin, consignment)
+    if @labels["month"]?
+      month = row[@labels["month"]]
+    else
+      month = nil
+    end
+
+    if @labels["cpc"]?
+      cpc = row[@labels["cpc"]]
+    else
+      cpc = nil
+    end
+    cif_etb = row[@labels["cif_etb"]]
+    cif_usd = row[@labels["cif_usd"]]
+
+    hash = Import.build_hash(hscode.id.to_s, @year.to_s, month, cpc, origin.id.to_s, consignment.id.to_s, cif_etb, cif_usd)
+    ImportQuery.new.unique_hash(hash).first?
   end
 end
