@@ -70,13 +70,7 @@ class HscodeImporter
       end
     end
 
-    if @errors.any?
-      puts "There were errors:"
-      write_out_errors
-    else
-      count = HscodeQuery.new.count
-      puts "Success: There are #{count} Hscodes in the database."
-    end
+    write_out_errors
   end
 
   private def new_hscode_from(row, section, chapter, heading)
@@ -144,6 +138,14 @@ class HscodeImporter
   end
 
   private def write_out_errors
-    pp @errors
+    if @errors.any?
+      puts "There were errors:"
+      pp @errors
+    else
+      count = HscodeQuery.new.count
+      if @show_progress
+        puts "Success: There are #{count} Hscodes in the database."
+      end
+    end
   end
 end
