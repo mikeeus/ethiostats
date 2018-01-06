@@ -42,5 +42,6 @@ def csv_from_excel():
         writer.writerow(sheet.row_values(rownum))
 
     csv_file.close()
+    print(string.Template("File '$filename' successfuly converted.").substitute(filename=output_filename))
 
 csv_from_excel()
