@@ -15,6 +15,8 @@ end
 hs_code_data = CSV.build do |csv|
   csv.row "No.", "HS Code", "HS Description", "Suppl. Unit", "Special Permission", "Duty Tax Rate", "Excise Tax Rate", "VAT Rate", "Sur Tax Rate", "With Hold Rate", "Second Schedule 1", "Second Schedule 2", "Export Duty Tax Rate"
   csv.row "1", "1011000", "LIVE HORSES,ASSESS MULES,AND HINNIES:PURE-BRED BREEDING ANMALS", "UN", "MOA", "5", "0", "15", "10", "3", "0", "0", "0"
+  csv.row "2", "1012000", "MISSING HEADING", "UN", "MOA", "5", "0", "15", "10", "3", "0", "0", "0"
+  csv.row "3", "1011100", "SETS DEFAULTS", "", "MOA", "", "", "", "", "", "0", "0", "0"
 end
 
 describe HscodeImporter do
@@ -40,20 +42,25 @@ describe HscodeImporter do
   # the db. There is no `Spec.before_all` method, so this will have to do for
   # now.
   it "imports hscode and sets section, chapter and heading" do
-    hscode = HscodeQuery.new.first?
-    hscode.should_not be_nil
+    # test associations
+    hscode = HscodeQuery.new.first
+    hscode.section.code.should eq "01"
+    hscode.chapter.code.should eq "0101"
+    hscode.heading.code.should eq "010110"
 
-    if hscode
-      # test associations
-      hscode.section.code.should eq "01"
-      hscode.chapter.code.should eq "0101"
-      hscode.heading.code.should eq "010110"
+    # Creates missing heading
+    missing_heading = HscodeQuery.new.find(2)
+    missing_heading.description.should eq "MISSING HEADING"
+    missing_heading.heading.description.should eq "--"
 
-      # make sure attrbutes are set
-      hscode.withholding.should eq 3
-      hscode.ss_1.should eq 0
-      hscode.export_duty.should eq 0
-      hscode.special_permission.should eq "MOA"
-    end
+    # Sets defaults
+    sets_defaults = HscodeQuery.new.find(3)
+    sets_defaults.description.should eq "SETS DEFAULTS"
+    sets_defaults.unit.should eq "UN"
+    sets_defaults.duty.should eq 0
+    sets_defaults.excise.should eq 0
+    sets_defaults.vat.should eq 15
+    sets_defaults.sur.should eq 10
+    sets_defaults.withholding.should eq 3
   end
 end

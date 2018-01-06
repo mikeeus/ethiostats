@@ -52,11 +52,7 @@ class HscodeImporter
 
       heading = HeadingQuery.new.code(heading_code).first?
       if heading.nil?
-        heading = HeadingForm.new(
-          chapter_id: chapter.id.to_s,
-          code: heading_code,
-          description: "-"
-        ).save!
+        heading = create_heading(chapter, heading_code)
       end
 
       if hscode_exists?(row)
@@ -94,7 +90,7 @@ class HscodeImporter
       special_permission: row[@labels[:special_permission]],
       duty: or_default(row[@labels[:duty]], "0"),
       # somehow excise get's parsed to "100.0" and needs to be converted
-      excise: or_default(row[@labels[:excise]].to_f.to_i.to_s, "0"),
+      excise: ensure_int_with_default(row[@labels[:excise]], "0"),
       vat: or_default(row[@labels[:vat]], "15"),
       sur: or_default(row[@labels[:sur]], "10"),
       withholding: or_default(row[@labels[:withholding]], "3"),
@@ -102,6 +98,14 @@ class HscodeImporter
       ss_2: row[@labels[:ss_2]],
       export_duty: row[@labels[:export_duty]],
     )
+  end
+
+  private def ensure_int_with_default(value, default)
+    if value.empty?
+      default
+    else
+      value.to_f.to_i.to_s
+    end
   end
 
   private def or_default(value, default)
@@ -118,6 +122,14 @@ class HscodeImporter
     else
       value
     end
+  end
+
+  private def create_heading(chapter : Chapter, heading_code : String)
+    HeadingForm.new(
+      chapter_id: chapter.id.to_s,
+      code: heading_code,
+      description: "--"
+    ).save!
   end
 
   private def hscode_exists?(row)
