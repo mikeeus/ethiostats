@@ -15,6 +15,7 @@ class HscodeForm < Hscode::BaseForm
   allow withholding
   allow ss_1
   allow ss_2
+  allow export_duty
 
   def prepare
     validate_required section_id
@@ -22,12 +23,9 @@ class HscodeForm < Hscode::BaseForm
     validate_required heading_id
     validate_required code
     validate_required description
-    validate_required unit
 
     validate_required duty
     validate_required excise
-    validate_required vat
     validate_required sur
-    validate_required withholding
   end
 end

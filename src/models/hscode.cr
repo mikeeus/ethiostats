@@ -19,5 +19,6 @@ class Hscode < BaseModel
     field withholding : Int32
     field ss_1 : Int32?
     field ss_2 : Int32?
+    field export_duty : Int32?
   end
 end

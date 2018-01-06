@@ -17,6 +17,7 @@ class CreateHscodes::V20180104171635 < LuckyMigrator::Migration::V1
       add withholding : Int32, default: 3
       add ss_1 : Int32?
       add ss_2 : Int32?
+      add export_duty : Int32?
     end
 
     execute "CREATE INDEX hscodes_section_chapter_heading_index ON hscodes USING btree (section_id, chapter_id, heading_id);"
