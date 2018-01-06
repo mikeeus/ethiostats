@@ -15,6 +15,7 @@ class HscodeForm < Hscode::BaseForm
   allow withholding
   allow ss_1
   allow ss_2
+  allow export_duty
 
   def prepare
     validate_required section_id
