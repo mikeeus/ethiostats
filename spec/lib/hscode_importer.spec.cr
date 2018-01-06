@@ -38,9 +38,9 @@ describe HscodeImporter do
     LuckyRecord::Repo.run { |db| db.exec "DELETE FROM sections;" }
   end
 
-  # NOTE: I include all the tests in a single bock to avoid multiple calls to
-  # the db. There is no `Spec.before_all` method, so this will have to do for
-  # now.
+  # NOTE: I include all the tests in a single bock to avoid multiple
+  # calls to the db. There is no `Spec.before_all` method, so this will
+  # have to do for now.
   it "imports hscode and sets section, chapter and heading" do
     # test associations
     hscode = HscodeQuery.new.first
