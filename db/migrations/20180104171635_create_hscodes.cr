@@ -7,7 +7,7 @@ class CreateHscodes::V20180104171635 < LuckyMigrator::Migration::V1
 
       add code : String, unique: true
       add description : String
-      add unit : String , default: "UN"
+      add unit : String, default: "UN"
       add special_permission : String?
 
       add duty : Int32, default: 0
