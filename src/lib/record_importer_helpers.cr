@@ -14,8 +14,8 @@ module RecordImporterHelpers
       puts "There were errors:"
       pp @errors
     else
-      count = ImportQuery.new.count
       if @show_progress
+        count = ImportQuery.new.count
         puts "Success: There are #{count} Imports in the database."
       end
     end
