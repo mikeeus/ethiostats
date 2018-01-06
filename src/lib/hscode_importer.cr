@@ -1,3 +1,4 @@
+require "csv"
 require "./import_progress_helpers.cr"
 
 class HscodeImporter
