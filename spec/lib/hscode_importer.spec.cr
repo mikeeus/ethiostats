@@ -1,5 +1,6 @@
 require "csv"
 require "../spec_helper.cr"
+require "../../src/lib/hs_classification_importer.cr"
 require "../../src/lib/hscode_importer.cr"
 
 # We can use CSV.build to easily create a CSV string
@@ -12,6 +13,7 @@ hs_class_data = CSV.build do |csv|
 end
 
 hs_code_data = CSV.build do |csv|
+  csv.row "No.", "HS Code", "HS Description", "Suppl. Unit", "Special Permission", "Duty Tax Rate", "Excise Tax Rate", "VAT Rate", "Sur Tax Rate", "With Hold Rate", "Second Schedule 1", "Second Schedule 2", "Export Duty Tax Rate"
   csv.row "1", "1011000", "LIVE HORSES,ASSESS MULES,AND HINNIES:PURE-BRED BREEDING ANMALS", "UN", "MOA", "5", "0", "15", "10", "3", "0", "0", "0"
 end
 
@@ -19,11 +21,11 @@ describe HscodeImporter do
   # We'll import the hs classes then the hscodes from our csv objects
   #  before each test
   Spec.before_each do
-    hs_class_length = CSV.parse(data).size
-    HsClassificationImporter.new(CSV.new(data, headers: true), hs_class_length, false).call
+    hs_class_length = CSV.parse(hs_class_data).size
+    HsClassificationImporter.new(CSV.new(hs_class_data, headers: true), hs_class_length, false).call
 
-    length = CSV.parse(data).size
-    HsCodeImporter.new(CSV.new(data, headers: true), length, false).call
+    length = CSV.parse(hs_code_data).size
+    HscodeImporter.new(CSV.new(hs_code_data, headers: true), length, false).call
   end
 
   # And clear the the table afterwards
@@ -39,15 +41,19 @@ describe HscodeImporter do
   # now.
   it "imports hscode and sets section, chapter and heading" do
     hscode = HscodeQuery.new.first?
-    hcsode.should_not be_nil
+    hscode.should_not be_nil
 
-    # test associations
-    hscode.section.code.should eq "01"
-    hscode.chapter.code.should eq "0101"
-    hscode.heading.code.should eq "010110"
+    if hscode
+      # test associations
+      hscode.section.code.should eq "01"
+      hscode.chapter.code.should eq "0101"
+      hscode.heading.code.should eq "010110"
 
-    # make sure attrbutes are set
-    hscode.withholding.should eq 3
-    hscode.ss_1.should eq 3
+      # make sure attrbutes are set
+      hscode.withholding.should eq 3
+      hscode.ss_1.should eq 0
+      hscode.export_duty.should eq 0
+      hscode.special_permission.should eq "MOA"
+    end
   end
 end
