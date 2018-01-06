@@ -14,7 +14,15 @@ class ExportForm < Export::BaseForm
   allow tax_etb_cents
   allow tax_usd_cents
 
-  allow hash
+  allow unique_hash
+
+  def before_save
+    set_hash
+  end
+
+  def set_hash
+    unique_hash.value = Export.build_hash(hscode_id, year, month, cpc, destination_id, fob_etb_cents, fob_usd_cents)
+  end
 
   def prepare
     validate_required hscode_id
@@ -25,6 +33,6 @@ class ExportForm < Export::BaseForm
     validate_required fob_etb_cents
     validate_required fob_usd_cents
 
-    validate_required hash
+    validate_required unique_hash
   end
 end
