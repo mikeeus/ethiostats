@@ -9,7 +9,14 @@ class HsClassificationImporter
   end
 
   def call
+    # Iterate through the CSV's rows accessing columns with
+    # their header names. We can do this because we instantiated
+    # CSV with `headers: true`.
     @csv.each do |row|
+      # NOTE: CSV rows are parsed as strings. So you might need to
+      # convert it to your desired type. We won't need to worry in
+      # this case because Lucky Forms converts string parameters
+      # automatically.
       if row["Tier"] == "1"
         import_section(row)
       elsif row["Tier"] == "2"
@@ -66,6 +73,8 @@ class HsClassificationImporter
     heading.save!
   end
 
+  # Check if section exists by querying it by code.
+  # `first?` will return nil if record is not found.
   private def section_exists?(code)
     SectionQuery.new.code(code).first?
   end
@@ -83,11 +92,17 @@ class HsClassificationImporter
     code = section.code + "00"
     return if chapter_exists?(code)
 
+    # NOTE: we save associations by saving the foreign_key.
+    # We convert the id to a string because Lucky excpects
+    # form parameters to be strings (for now).
     chapter = ChapterForm.new(
       section_id: section.id.to_s,
       code: code,
       description: "---"
     )
+
+    # `save!` raises an error on failure or returns the new model.
+    # We pass the saved model to the next method.
     if chapter = chapter.save!
       save_zero_heading(chapter)
     end
