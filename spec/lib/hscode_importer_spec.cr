@@ -1,5 +1,6 @@
 require "csv"
 require "../spec_helper.cr"
+require "./test_data.cr"
 
 describe HscodeImporter do
   # We'll import the hs classes then the hscodes from our csv objects.

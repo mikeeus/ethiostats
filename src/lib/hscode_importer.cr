@@ -1,8 +1,10 @@
 require "csv"
 require "./import_progress_helpers.cr"
+require "./record_importer_helpers.cr"
 
 class HscodeImporter
   include ImportProgressHelpers
+  include RecordImporterHelpers
 
   @labels = {
     code: "HS Code",
@@ -18,8 +20,6 @@ class HscodeImporter
     ss_2: "Second Schedule 2",
     export_duty: "Export Duty Tax Rate"
   }
-
-  @errors = [] of NamedTuple(msg: String, row: CSV)
 
   def initialize(@csv : CSV, @length : Int32, @show_progress = true)
   end
@@ -95,30 +95,6 @@ class HscodeImporter
     )
   end
 
-  private def ensure_int_with_default(value, default)
-    if value.empty?
-      default
-    else
-      value.to_f.to_i.to_s
-    end
-  end
-
-  private def or_default(value, default)
-    if value.empty?
-      default
-    else
-      value
-    end
-  end
-
-  private def nillify(value)
-    if value.empty?
-      nil
-    else
-      value
-    end
-  end
-
   private def create_heading(chapter : Chapter, heading_code : String)
     HeadingForm.new(
       chapter_id: chapter.id.to_s,
@@ -129,24 +105,5 @@ class HscodeImporter
 
   private def hscode_exists?(row)
     HscodeQuery.new.code(row[@labels[:code]]).first?
-  end
-
-  private def add_error(row, msg)
-    @errors << {
-      msg: msg,
-      row: row
-    }
-  end
-
-  private def write_out_errors
-    if @errors.any?
-      puts "There were errors:"
-      pp @errors
-    else
-      count = HscodeQuery.new.count
-      if @show_progress
-        puts "Success: There are #{count} Hscodes in the database."
-      end
-    end
   end
 end
