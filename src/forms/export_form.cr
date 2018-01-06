@@ -14,6 +14,8 @@ class ExportForm < Export::BaseForm
   allow tax_etb_cents
   allow tax_usd_cents
 
+  allow hash
+
   def prepare
     validate_required hscode_id
     validate_required destination_id
@@ -22,5 +24,7 @@ class ExportForm < Export::BaseForm
     validate_required mass_net_kg
     validate_required fob_etb_cents
     validate_required fob_usd_cents
+
+    validate_required hash
   end
 end

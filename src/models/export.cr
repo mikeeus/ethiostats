@@ -15,5 +15,7 @@ class Export < BaseModel
     field fob_usd_cents : Int32
     field tax_etb_cents : Int32?
     field tax_usd_cents : Int32?
+
+    field hash : String
   end
 end

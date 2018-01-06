@@ -15,6 +15,8 @@ class CreateExports::V20180104171700 < LuckyMigrator::Migration::V1
       add fob_usd_cents : Int32
       add tax_etb_cents : Int32?
       add tax_usd_cents : Int32?
+
+      add hash : String
     end
 
     execute "CREATE INDEX ON exports (year, month);"
