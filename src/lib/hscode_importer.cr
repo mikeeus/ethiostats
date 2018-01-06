@@ -39,12 +39,14 @@ class HscodeImporter
       section = SectionQuery.new.code(section_code).first?
       if section.nil?
         add_error(row, "Section with code: #{section_code} not found!")
+        increment_progress
         next
       end
 
       chapter = ChapterQuery.new.code(chapter_code).first?
       if chapter.nil?
         add_error(row, "Chapter with code: #{chapter_code} not found!")
+        increment_progress
         next
       end
 
@@ -58,18 +60,26 @@ class HscodeImporter
       end
 
       if hscode_exists?(row)
+        increment_progress
         next
       end
 
       hscode = new_hscode_from row, section, chapter, heading
 
-      if hscode.save!
+      if hscode.save
         increment_progress
+      else
+        pp hscode.errors
+        raise "Problem importing hscode"
       end
     end
 
     if @errors.any?
+      puts "There were errors:"
       write_out_errors
+    else
+      count = HscodeQuery.new.count
+      puts "Success: There are #{count} Hscodes in the database."
     end
   end
 
@@ -80,17 +90,34 @@ class HscodeImporter
       heading_id: heading.id.to_s,
       code: row[@labels[:code]],
       description: row[@labels[:description]],
-      unit: row[@labels[:unit]],
+      unit: or_default(row[@labels[:unit]], "UN"),
       special_permission: row[@labels[:special_permission]],
-      duty: row[@labels[:duty]],
-      excise: row[@labels[:excise]],
-      vat: row[@labels[:vat]],
-      sur: row[@labels[:sur]],
-      withholding: row[@labels[:withholding]],
+      duty: or_default(row[@labels[:duty]], "0"),
+      # somehow excise get's parsed to "100.0" and needs to be converted
+      excise: or_default(row[@labels[:excise]].to_f.to_i.to_s, "0"),
+      vat: or_default(row[@labels[:vat]], "15"),
+      sur: or_default(row[@labels[:sur]], "10"),
+      withholding: or_default(row[@labels[:withholding]], "3"),
       ss_1: row[@labels[:ss_1]],
       ss_2: row[@labels[:ss_2]],
       export_duty: row[@labels[:export_duty]],
     )
+  end
+
+  private def or_default(value, default)
+    if value.empty?
+      default
+    else
+      value
+    end
+  end
+
+  private def nillify(value)
+    if value.empty?
+      nil
+    else
+      value
+    end
   end
 
   private def hscode_exists?(row)
