@@ -1,13 +1,14 @@
-require "./csv_import_helpers.cr"
+require "./import_task_helpers.cr"
 require "../src/lib/hs_classification_importer.cr"
 
 class ImportHsClassifications < LuckyCli::Task
-  include CSVImportHelpers
+  include ImportTaskHelpers
 
   # banner that shows up when we list tasks with `lucky --help`
   banner "Import hs classifications from a csv file"
 
   def call
+    ensure_countries_are_imported
     import_hs_classifications
   end
 
