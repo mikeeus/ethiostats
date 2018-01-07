@@ -19,14 +19,6 @@ class ImportForm < Import::BaseForm
 
   allow unique_hash
 
-  def before_save
-    set_hash
-  end
-
-  def set_hash
-    unique_hash.value = Import.build_hash(hscode_id, year, month, cpc, origin_id, consignment_id, cif_etb_cents, cif_usd_cents)
-  end
-
   def prepare
     validate_required hscode_id
     validate_required origin_id

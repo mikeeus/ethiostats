@@ -16,14 +16,6 @@ class ExportForm < Export::BaseForm
 
   allow unique_hash
 
-  def before_save
-    set_hash
-  end
-
-  def set_hash
-    unique_hash.value = Export.build_hash(hscode_id, year, month, cpc, destination_id, fob_etb_cents, fob_usd_cents)
-  end
-
   def prepare
     validate_required hscode_id
     validate_required destination_id
