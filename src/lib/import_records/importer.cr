@@ -50,14 +50,12 @@ class ImportRecords::Importer
 
     hash = import_hash(row, hscode, origin, consignment)
     if ImportQuery.new.find_by_hash?(hash)
-      add_error row, "Error: Import exists."
       return
     end
 
     params = build_params(row, hscode, origin, consignment, hash)
     import = ImportForm.new(params)
 
-    pp hash
     unless import.save
       pp params
       add_error row, "Error importing import record: #{import.errors.inspect}."

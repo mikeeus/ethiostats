@@ -19,7 +19,9 @@ class CountryImporter
         short, lat, lon, name = item.to_s.split("\t")
 
         # If the country already exists go to the next iteration
-        if CountryQuery.new.name(name).first?
+        existing = CountryQuery.new.name(name).first?
+        if existing
+          db.exec update_aliases(existing)
           increment_progress
           next
         end
@@ -48,6 +50,12 @@ class CountryImporter
     SQL
   end
 
+  private def update_aliases(existing : Country)
+    <<-SQL
+    UPDATE countries SET aliases = '{#{escaped_aliases(existing.name)}}'::text[] WHERE id = #{existing.id};
+    SQL
+  end
+
   # We escape any special characters in the aliases using PG::EscapeHelper.
   # This returns a string surrounded by single quotes so we remove those using
   # lchop and rchop.
@@ -55,7 +63,7 @@ class CountryImporter
     alias_arr = @aliases[name]? || [] of String
 
     alias_arr = alias_arr.map do |a|
-      PG::EscapeHelper.escape_literal(a.to_s).lchop.rchop
+      a.to_s.gsub("'", "''").gsub(",", "\\,")
     end
 
     alias_arr.join(',')

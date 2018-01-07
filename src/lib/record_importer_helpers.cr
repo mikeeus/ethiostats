@@ -3,7 +3,6 @@ module RecordImporterHelpers
   @errors = [] of NamedTuple(msg: String, row: CSV)
 
   private def add_error(row, msg)
-    pp msg
     @errors << {
       msg: msg,
       row: row
@@ -13,12 +12,7 @@ module RecordImporterHelpers
   private def write_out_errors
     if @errors.any?
       puts "There were errors:"
-      pp @errors
-    else
-      if @show_progress
-        count = ImportQuery.new.count
-        puts "Success: There are #{count} Imports in the database."
-      end
+      pp @errors.map(&.[:msg])
     end
   end
 

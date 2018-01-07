@@ -18,7 +18,7 @@ class ImportHsClassifications < LuckyCli::Task
     file_path = "static/records/csv/hs_classification.csv"
 
     # Get csv length for progress bar
-    length = get_csv_length(file_path)
+    length = csv_length(file_path)
 
     File.open(file_path) do |f|
       # Instantiate CSV

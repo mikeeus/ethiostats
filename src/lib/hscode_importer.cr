@@ -26,6 +26,11 @@ class HscodeImporter
 
   def call
     @csv.each do |row|
+      if hscode_exists?(row)
+        increment_progress
+        next
+      end
+
       # parse codes
       code = row[@labels[:code]]
       if code.size == 7
@@ -56,11 +61,6 @@ class HscodeImporter
         heading = create_heading(chapter, heading_code)
       end
 
-      if hscode_exists?(row)
-        increment_progress
-        next
-      end
-
       hscode = new_hscode_from row, section, chapter, heading
 
       if hscode.save
@@ -72,6 +72,10 @@ class HscodeImporter
     end
 
     write_out_errors
+    if @show_progress
+      count = HscodeQuery.new.count
+      puts "Success: There are #{count} Imports in the database."
+    end
   end
 
   private def new_hscode_from(row, section, chapter, heading)

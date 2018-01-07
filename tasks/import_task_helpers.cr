@@ -1,10 +1,14 @@
 require "csv"
 
 module ImportTaskHelpers
-  private def get_csv_length(file_path)
+  private def csv_length(file_path)
+    length = 0
     File.open(file_path) do |f|
-      CSV.parse(f).size
+      csv = CSV.parse(f)
+      length = csv.size
+      csv = nil
     end
+    length
   end
 
   private def csv_length_year(path)
@@ -42,8 +46,6 @@ module ImportTaskHelpers
   end
 
   private def ensure_ready_to_import_records
-    ensure_countries_are_imported
-    ensure_hs_classifications_are_imported
     ensure_hscodes_are_imported
   end
 end
