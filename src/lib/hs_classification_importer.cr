@@ -9,6 +9,9 @@ class HsClassificationImporter
   end
 
   def call
+    # First import zero section for missing codes
+    import_zero_section
+
     # Iterate through the CSV's rows accessing columns with
     # their header names. We can do this because we instantiated
     # CSV with `headers: true`.
@@ -28,7 +31,18 @@ class HsClassificationImporter
     end
   end
 
-  # Import section
+  private def import_zero_section
+    code = "00"
+    return if section_exists?(code)
+
+    desc = "Deprecated or missing codes."
+    section = SectionForm.new(code: code, description: desc)
+
+    if section = section.save!
+      save_zero_chapter(section)
+    end
+  end
+
   private def import_section(row)
     code = row["ProductCode"]
     return if section_exists?(code)
@@ -37,13 +51,13 @@ class HsClassificationImporter
       code: code,
       description: row["Product Description"]
     )
+
     if section = section.save!
       # Add zeroed chapters to section
       save_zero_chapter(section)
     end
   end
 
-  # Import chapter
   private def import_chapter(row)
     code = row["ProductCode"]
     return if chapter_exists?(code)
@@ -54,13 +68,12 @@ class HsClassificationImporter
       code: code,
       description: row["Product Description"]
     )
+
     if chapter = chapter.save!
-      # Add zeroed heading to chapter
       save_zero_heading(chapter)
     end
   end
 
-  # Import headings
   private def import_heading(row)
     return if heading_exists?(row["ProductCode"])
 
@@ -87,7 +100,7 @@ class HsClassificationImporter
     HeadingQuery.new.code(code).first?
   end
 
-  # Zero chapters are fillers for sections
+  # Zeroed chapters and headings are fillers
   private def save_zero_chapter(section : Section)
     code = section.code + "00"
     return if chapter_exists?(code)
@@ -108,7 +121,6 @@ class HsClassificationImporter
     end
   end
 
-  # Zero headings are fillers for zero chapters
   private def save_zero_heading(chapter : Chapter)
     code = chapter.code + "00"
     return if heading_exists?(code)
