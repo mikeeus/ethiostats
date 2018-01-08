@@ -23,9 +23,5 @@ class HscodeForm < Hscode::BaseForm
     validate_required heading_id
     validate_required code
     validate_required description
-
-    validate_required duty
-    validate_required excise
-    validate_required sur
   end
 end

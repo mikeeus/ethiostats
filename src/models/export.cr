@@ -15,5 +15,15 @@ class Export < BaseModel
     field fob_usd_cents : Int32
     field tax_etb_cents : Int32?
     field tax_usd_cents : Int32?
+
+    field unique_hash : String
+  end
+
+  def self.build_hash(hscode_id, year, month, cpc, destination_id, fob_etb, fob_usd)
+    Base64.encode("#{hscode_id}|#{year}|#{month}|#{cpc}|#{destination_id}|#{fob_etb}|#{fob_usd}")
+  end
+
+  def build_hash
+    Export.build_hash(hscode_id, year, month, cpc, destination_id, fob_etb, fob_usd)
   end
 end

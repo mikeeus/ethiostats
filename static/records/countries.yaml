@@ -201,8 +201,10 @@ countries:
   - SL	8.460555	-11.779889	Sierra Leone
   - SM	43.94236	12.457777	San Marino
   - SN	14.497401	-14.452362	Senegal
+  - SCG	44.787197	20.457273	Serbia and Montenegro
   - SO	5.152149	46.199616	Somalia
   - SR	3.919305	-56.027783	Suriname
+  - SS	6.8770	31.3070	South Sudan
   - ST	0.18636	6.613081	São Tomé and Príncipe
   - SV	13.794185	-88.89653	El Salvador
   - SY	34.802075	38.996815	Syria
@@ -226,6 +228,7 @@ countries:
   - UA	48.379433	31.16558	Ukraine
   - UG	1.373333	32.290275	Uganda
   - US	37.09024	-95.712891	United States
+  - UM	19.2823	166.6470	U.S. Minor Outlying Islands
   - UY	-32.522779	-55.765835	Uruguay
   - UZ	41.377491	64.585262	Uzbekistan
   - VA	41.902916	12.453389	Vatican City
@@ -239,105 +242,157 @@ countries:
   - WS	-13.759029	-172.104629	Samoa
   - XK	42.602636	20.902977	Kosovo
   - YE	15.552727	48.516388	Yemen
+  - SER	43.85	18.25	Yugoslavia
   - YT	-12.8275	45.166244	Mayotte
   - ZA	-30.559482	22.937506	South Africa
   - ZM	-13.133897	27.849332	Zambia
   - ZW	-19.015438	29.154857	Zimbabwe
-
+  - --	31.9522	35.2332	Palestine
+  - --	0	0	Neutral Zone
+  - xx	0	0	Unknown
 aliases:
   Afghanistan:
-    - Afganistan
+    - "Afganistan"
   Antigua and Barbuda:
-    - Antigua And Barbuda
-  Congo:
-    - Democratic republic of the Congo
-  Ivory Coast:
-    - Cote d'Ivoire
-    - Cote D'ivoire
-    - Cote d&#39;Ivoire
+    - "Antigua And Barbuda"
+  Brunei:
+    - "Brunei Darussalam"
+  Faroe Islands:
+    - "Faeroe Islands"
+  Congo [DRC]:
+    - "Democratic republic of the Congo"
+    - "Congo"
+    - "Zaire"
+  Cocos [Keeling] Islands:
+    - "Cocos (Keeling) Islands"
+  Heard Island and McDonald Islands:
+    - "Heard And Mcdonald Islands"
+  Czech Republic:
+    - "Czechoslovakia"
+  Côte d'Ivoire:
+    - "Cote D'Ivoire"
+    - "Ivory Coast"
+    - "Cote d&#39;Ivoire"
   Yemen:
-    - Democratic Yemen
+    - "Democratic Yemen"
   El Salvador:
-    - Elsalvador
+    - "Elsalvador"
   Germany:
-    - United Germany
+    - "United Germany"
   Iran:
-    - Iran
-    - Islamic Republic of
-    - Iran (Islamic Republic Of)
-    - Iran Islamic Republic of
+    - "Iran"
+    - "Islamic Republic of"
+    - "Iran (Islamic Republic Of)"
+    - "Iran Islamic Republic of"
+    - "Iran, Islamic Republic of"
+  Kazakhstan:
+    - Kazakstan
   South Korea:
-    - Korea
-    - Democratic People's Rep. of
-    - Korea
-    - Democratic People's Rep.
-    - Korea Dem.People's Rep. Of
-    - Korea
-    - Dem.People's Rep. Of
-    - Korea Democratic People&#39;s Rep. of
-    - Korea  Dem.People&#39;s Rep. Of
-    - Korea Democratic People's Rep.
-    - Korea Republic Of
-    - Korea Republic of
-    -  Korea
-    - Republic of
-    - Korea  Republic Of
+    - "Korea"
+    - "Democratic People's Rep. of"
+    - "Korea, Democratic People's Rep."
+    - "Korea Dem.People's Rep. Of"
+    - "Korea, Dem.People's Rep. Of"
+    - "Korea Democratic People&#39;s Rep. of"
+    - "Korea  Dem.People&#39;s Rep. Of"
+    - "Korea Democratic People's Rep."
+    - "Korea Republic Of"
+    - "Korea Republic of"
+    - " Korea, Republic of"
+    - "Korea  Republic Of"
+    - "Korea, Republic Of"
+    - "Korea, Dem.People's Rep. Of"
+    - "Korea, Democratic People's Rep. of"
   Laos:
-    - Lao
-    - Lao People's Dem. Republic
-    - Lao People&#39;s Democratic Republic
-    - Lao People's Democratic Republi
-    - Lao People&#39;s Democratic Republic
-    - Lao People's Democratic Republic
+    - "Lao"
+    - "Lao People's Dem. Republic"
+    - "Lao People&#39;s Democratic Republic"
+    - "Lao People's Democratic Republi"
+    - "Lao People&#39;s Democratic Republic"
+    - "Lao People's Democratic Republic"
   Libya:
-    - Libyan Arab Jamahiriya
-    - Lybian Arab Jamahiriya
+    - "Libyan Arab Jamahiriya"
+    - "Lybian Arab Jamahiriya"
   Micronesia:
-    - Micronesia Federated States of
+    - "Micronesia Federated States of"
+    - "Micronesia, Federated States of"
   Moldova:
-    - Republic of Moldova
+    - "Republic of Moldova"
   Russia:
-    - Russian Federation
-    - Union Of Soviet Socialist Rep.
+    - "Russian Federation"
+    - "Union Of Soviet Socialist Rep."
   Saint Helena:
-    - St. Helena
+    - "St. Helena"
   Saint Kitts and Nevis:
-    - Saint Kitts And Nevis
+    - "Saint Kitts And Nevis"
   Saint Vincent and the Grenadines:
-    - Saint Vincent And Grenadines
-  Saint Pierre Et Miquelon:
-    - St. Pierre Et Miquelon
+    - "Saint Vincent And Grenadines"
+  Saint Pierre and Miquelon:
+    - "Saint Pierre Et Miquelon"
+    - "St. Pierre Et Miquelon"
+    - "St. Pierre Et Miquelon"
   Syria:
-    - Syrian Arab Republic
+    - "Syrian Arab Republic"
+  São Tomé and Príncipe:
+    - "Sao Tome and Principe"
   Taiwan:
-    - Taiwan
-    - Province of China
-    - Taiwan Province of China
+    - "Taiwan"
+    - "Province of China"
+    - "Taiwan Province of China"
+    - "Taiwan, Province of China"
   Tanzania:
-    - United Republic of Tanzania
-  Macedonia:
-    - The former Yugoslav Rep. Macedonia
-    - The former Yugoslav Rep. Macedo
+    - "United Republic of Tanzania"
+  Macedonia [FYROM]:
+    - "Macedonia"
+    - "The former Yugoslav Rep. Macedonia"
+    - "The former Yugoslav Rep. Macedo"
   Trinidad and Tobago:
-    - Trinidad & Tobago
+    - "Trinidad & Tobago"
   Turks and Caicos Islands:
-    - Turks And Caicos Islands
-  United States Virgin Islands:
-    - Virgin Islands U.S.
+    - "Turks And Caicos Islands"
+  U.S. Virgin Islands:
+    - "United States Virgin Islands"
+    - "Virgin Islands U.S."
   Slovenia:
-    - Sloviena
+    - "Sloviena"
   Ukraine:
-    - Ukrain
+    - "Ukrain"
   United Kingdom:
-    - Great Britain
+    - "Great Britain"
   Guinea-Bissau:
-    - Guinea Bissau
-    - GuineaBissau
-  Wallis and Futuna Islands:
-    - Wallis And Futuna Islands
-  Christmas Island (Australia):
-    - Christmas Island[Australia]
-  Kampuchea:
-    - Kampuchea
-    - Democratic
-    - Kampuchea Democratic
+    - "Guinea Bissau"
+    - "GuineaBissau"
+  Wallis and Futuna:
+    - "Wallis and Futuna Islands"
+  Christmas Island:
+    - "Christmas Island (Australia)"
+    - "Christmas Island[Australia]"
+  Cambodia:
+    - "Kampuchea"
+    - "Kampuchea Democratic"
+    - "Kampuchea, Democratic"
+  Svalbard and Jan Mayen:
+    - "Svalbard and Jan Mayen Islands"
+  Réunion:
+    - "Reunion"
+  Vietnam:
+    - "Viet Nam"
+  Myanmar [Burma]:
+    - "Burma"
+    - "Myanmar"
+  Timor-Leste:
+    - "East Timor"
+  Pitcairn Islands:
+    - "Pitcairn"
+  Falkland Islands [Islas Malvinas]:
+    - "Falkland Islands (Malvinas)"
+  U.S. Minor Outlying Islands:
+    - "United States Minor Outlying I"
+    - "United States Minor Outlying"
+    - "United States Minor Outlying "
+    - "Johnston Island"
+    - "Wake Island"
+    - "Midway Islands"
+  Vatican City:
+    - Vatican City State (Holy See)
+    - Holy See (Vatican)

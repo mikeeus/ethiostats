@@ -16,5 +16,15 @@ class Import < BaseModel
     field cif_usd_cents : Int32
     field tax_etb_cents : Int32?
     field tax_usd_cents : Int32?
+
+    field unique_hash : String
+  end
+
+  def self.build_hash(hscode_id, year, month, cpc, origin_id, consignment_id, cif_etb_cents, cif_usd_cents)
+    Base64.encode("#{hscode_id}|#{year}|#{month}|#{cpc}|#{origin_id}|#{consignment_id}|#{cif_etb_cents}|#{cif_usd_cents}")
+  end
+
+  def build_hash
+    Import.build_hash(hscode_id, year, month, cpc, origin_id, consignment_id, cif_etb_cents, cif_usd_cents)
   end
 end

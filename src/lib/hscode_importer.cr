@@ -1,7 +1,10 @@
+require "csv"
 require "./import_progress_helpers.cr"
+require "./record_importer_helpers.cr"
 
 class HscodeImporter
   include ImportProgressHelpers
+  include RecordImporterHelpers
 
   @labels = {
     code: "HS Code",
@@ -18,13 +21,16 @@ class HscodeImporter
     export_duty: "Export Duty Tax Rate"
   }
 
-  @errors = [] of NamedTuple(msg: String, row: CSV)
-
   def initialize(@csv : CSV, @length : Int32, @show_progress = true)
   end
 
   def call
     @csv.each do |row|
+      if hscode_exists?(row)
+        increment_progress
+        next
+      end
+
       # parse codes
       code = row[@labels[:code]]
       if code.size == 7
@@ -55,11 +61,6 @@ class HscodeImporter
         heading = create_heading(chapter, heading_code)
       end
 
-      if hscode_exists?(row)
-        increment_progress
-        next
-      end
-
       hscode = new_hscode_from row, section, chapter, heading
 
       if hscode.save
@@ -70,12 +71,10 @@ class HscodeImporter
       end
     end
 
-    if @errors.any?
-      puts "There were errors:"
-      write_out_errors
-    else
+    write_out_errors
+    if @show_progress
       count = HscodeQuery.new.count
-      puts "Success: There are #{count} Hscodes in the database."
+      puts "Success: There are #{count} Imports in the database."
     end
   end
 
@@ -100,30 +99,6 @@ class HscodeImporter
     )
   end
 
-  private def ensure_int_with_default(value, default)
-    if value.empty?
-      default
-    else
-      value.to_f.to_i.to_s
-    end
-  end
-
-  private def or_default(value, default)
-    if value.empty?
-      default
-    else
-      value
-    end
-  end
-
-  private def nillify(value)
-    if value.empty?
-      nil
-    else
-      value
-    end
-  end
-
   private def create_heading(chapter : Chapter, heading_code : String)
     HeadingForm.new(
       chapter_id: chapter.id.to_s,
@@ -134,16 +109,5 @@ class HscodeImporter
 
   private def hscode_exists?(row)
     HscodeQuery.new.code(row[@labels[:code]]).first?
-  end
-
-  private def add_error(row, msg)
-    @errors << {
-      msg: msg,
-      row: row
-    }
-  end
-
-  private def write_out_errors
-    pp @errors
   end
 end
