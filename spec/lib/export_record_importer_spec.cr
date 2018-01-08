@@ -1,7 +1,7 @@
 require "csv"
 require "../spec_helper.cr"
 require "./test_data.cr"
-require "../../src/lib/export_record_importer.cr"
+require "../../src/lib/export_records/importer.cr"
 
 # Exports
 def build_export_csvs(hscode, destination)
@@ -33,7 +33,7 @@ end
 #
 # We're going to test to make sure that the importer class can handle all
 # three types.
-describe ExportRecordImporter do
+describe ExportRecords::Importer do
   Spec.before_each do
     import_test_hscodes
     import_test_countries
@@ -49,21 +49,21 @@ describe ExportRecordImporter do
         parsed = CSV.parse(pre_2007)
         year = parsed[1].first
         csv = CSV.new(pre_2007, headers: true)
-        ExportRecordImporter.new(csv, parsed.size, year.to_i, false).call
+        ExportRecords::Importer.new(csv, parsed.size, year.to_i, false).call
       end
 
       it "exports post_2007 exports" do
         parsed = CSV.parse(post_2007)
         year = parsed[1].first
         csv = CSV.new(post_2007, headers: true)
-        ExportRecordImporter.new(csv, parsed.size, year.to_i, false).call
+        ExportRecords::Importer.new(csv, parsed.size, year.to_i, false).call
       end
 
       it "exports post_2017 exports" do
         parsed = CSV.parse(post_2017)
         year = parsed[1].first
         csv = CSV.new(post_2017, headers: true)
-        ExportRecordImporter.new(csv, parsed.size, year.to_i, false).call
+        ExportRecords::Importer.new(csv, parsed.size, year.to_i, false).call
       end
     end
   end
