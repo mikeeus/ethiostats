@@ -1,10 +1,10 @@
 require "../spec_helper.cr"
-require "./test_data.cr"
+require "../support/factories.cr"
 require "../../src/lib/country_importer.cr"
 
 describe CountryImporter do
   Spec.before_each do
-    import_test_countries
+    seed_countries
   end
 
   # NOTE: `spec_helper` truncates the database after each test
