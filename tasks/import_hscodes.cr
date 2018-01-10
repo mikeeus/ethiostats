@@ -15,12 +15,10 @@ class ImportHscodes < LuckyCli::Task
   private def import_hscodes
     puts "Importing Hscodes"
 
-    file_path = "static/records/csv/tariffs.csv"
-
     # Get csv length for progress bar
-    length = csv_length(file_path)
+    length = csv_length(@csv_tariffs_path)
 
-    File.open(file_path) do |f|
+    File.open(@csv_tariffs_path) do |f|
       # Instantiate CSV
       csv = CSV.new(f, headers: true)
 

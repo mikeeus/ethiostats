@@ -3,7 +3,6 @@ require "../src/lib/import_records/importer.cr"
 
 class ImportImportRecords < LuckyCli::Task
   include ImportTaskHelpers
-  @csv_imports_path = "static/records/csv/imports"
   @records : Array(String) = Dir.new(@csv_imports_path).children
 
   # banner that shows up when we list tasks with `lucky --help`

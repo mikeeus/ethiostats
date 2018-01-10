@@ -1,8 +1,11 @@
 # require YAML and our CountryImporter class
 require "yaml"
 require "../src/lib/country_importer.cr"
+require "./import_task_helpers.cr"
 
 class ImportCountries < LuckyCli::Task
+  include ImportTaskHelpers
+
   # banner that shows up when we list tasks with `lucky --help`
   banner "Import countries from a yaml file"
 
@@ -12,7 +15,7 @@ class ImportCountries < LuckyCli::Task
     aliases = nil
 
     # Open our file and parse it just like in the specs
-    File.open("static/records/countries.yaml") do |f|
+    File.open(@yaml_countries_path) do |f|
       parsed = YAML.parse(f)
       countries = parsed["countries"].to_a
       aliases = parsed["aliases"]

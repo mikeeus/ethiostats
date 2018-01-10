@@ -3,9 +3,7 @@ require "../src/lib/export_records/importer.cr"
 
 class ImportExportRecords < LuckyCli::Task
   include ImportTaskHelpers
-  @csv_exports_path = "static/records/csv/exports"
   @records : Array(String) = Dir.new(@csv_exports_path).children
-
 
   # banner that shows up when we list tasks with `lucky --help`
   banner "Import export records"
