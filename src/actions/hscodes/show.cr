@@ -1,6 +1,6 @@
 class Hscodes::Show < BrowserAction
-  action do
-    hscode = HscodeQuery.new.code(id).first
+  get "/hscodes/:code" do
+    hscode = HscodeQuery.new.code(code).first
     render hscode: hscode
   end
 end
