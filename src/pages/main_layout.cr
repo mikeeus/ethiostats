@@ -22,6 +22,8 @@ abstract class MainLayout
         title page_title
         css_link asset("css/app.css")
         js_link asset("js/app.js")
+        css_link asset("css/auto-complete.css")
+        js_link asset("js/auto-complete.min.js")
         c3_scripts_and_css
         csrf_meta_tags
         meta name: "viewport", content: "width=device-width, initial-scale=1"
