@@ -138,3 +138,13 @@ input[name="search-hscodes"] {
     stroke-width: 10px;
   }
 }
+
+/*HSCODES*/
+.hscodes-wrapper {
+  .hscodes-row-1, .hscodes-row-2, .hscodes-row-3 {
+    display: flex;
+    .hscodes-rates {
+      flex: 1;
+    }
+  }
+}
