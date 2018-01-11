@@ -21,4 +21,9 @@ class Hscode < BaseModel
     field ss_2 : Int32?
     field export_duty : Int32?
   end
+
+  # Returns hscodes that belongs the same HS chapter
+  def related
+    chapter.hscodes.reject { |hs| hs.id == id }
+  end
 end
