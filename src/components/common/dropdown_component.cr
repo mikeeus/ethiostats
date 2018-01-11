@@ -1,18 +1,4 @@
-module Layout::Components
-  private def header
-    div class: "nav" do
-      link "Ethiostats", class: "brand", to: "/"
-      # ul role: "navigation" do
-      # end
-    end
-  end
-
-  private def footer
-    footer class: "footer" do
-      link "mikias abera", to: "https://mikias.net"
-    end
-  end
-
+module Common::DropdownComponent
   private def dropdown
     div class: "ets-dropdown" do
       div class: "dropbtn", onclick: "toggleDropdown('countries-dropdown')" do

@@ -3,7 +3,8 @@ abstract class MainLayout
   include Shared::FieldErrorsComponent
   include Shared::FlashComponent
   include Shared::ChartsComponents
-  include Layout::Components
+  include Layout::HeaderComponent
+  include Layout::FooterComponent
 
   # You can put things here that all pages need
   #

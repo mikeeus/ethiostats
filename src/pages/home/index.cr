@@ -1,58 +1,35 @@
 class Home::IndexPage < MainLayout
+  include Charts::HomepageComponent
+
   def inner
-    text "Homepage chart"
-    homepage_chart
-  end
-
-  private def homepage_chart
-    div id: "homepage-chart"
-
-    annual_totals = ChartQuery.annual_totals
-    imports = ["Imports"] + annual_totals.map{ |a| (a.imports_total / 100_000_000).to_s }
-    exports = ["Exports"] + annual_totals.map{ |a| (a.exports_total / 100_000_000).to_s }
-    years = ["year"] + annual_totals.map(&.year)
-
-    script do
-      raw %(
-        var chart = c3.generate({
-          bindto: '#homepage-chart',
-          data: {
-            x: 'year',
-            columns: [
-              #{years},
-              #{imports},
-              #{exports}
-            ],
-            // types: {
-            //   Imports: 'bar',
-            //   Exports: 'bar'
-            // }
-          },
-          axis: {
-            y: {
-              label: {
-                text: 'Millions',
-                // position: 'outer-middle'
-              },
-              tick: {
-                format: d3.format('$,')
-              }
-            }
-          }
-        });
-      )
+    div class: "homepage-wrapper" do
+      h1 "Ethiopian Trade Statistics"
+      home_intro
+      homepage_chart
     end
   end
 
-  private def import_columns
-    ["Imports"] + total_dollars(annual_totals_by_year(:imports))
-  end
-
-  private def export_columns
-    ["Exports"] + total_dollars(annual_totals_by_year(:exports))
-  end
-
-  private def total_dollars(value : Array(AnnualTotal))
-    value.map { |i| (i.total / 100).to_s }
+  private def home_intro
+    para "The purpose of this site is to make Ethiopian import and export statistics available in a userfriendly and clear format in order to promote:"
+    ul do
+      li do
+        h3 "Investment"
+        para "assist potential investors discover opportunities for import substitution."
+      end
+      li do
+        h3 "Growth"
+        para "help businesses identify developing trends to guide decisions."
+      end
+      li do
+        h3 "Research"
+        para "serve as a reference for students, researchers and decision makers."
+      end
+    end
+    para "You can search and select an HS Code from the table, select a country from the drop down in the header or check out one of the annual summaries from the dropdown link above. Good luck and happy browsing!"
+    small do
+      text "The data on this site is available to the public from the "
+      link "Ethiopian Revenue and Customs Authority (ERCA)", to: "http://www.erca.gov.et/"
+      text " and is updated every two months."
+    end
   end
 end
