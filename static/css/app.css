@@ -3,7 +3,7 @@
 /* Uncomment these when you add files to variables, mixins or components */
 
 @import "variables/**.pcss";
-/*@import "mixins/**.pcss";*/
+@import "mixins/**.pcss";
 @import "components/**.pcss";
 /* For example, add `static/css/components/btn.pcss` and uncomment the next line */
 
@@ -15,14 +15,25 @@ html, body {
 body {
   padding-top: 68px;
 }
-
+* {
+  box-sizing: border-box;
+}
 #content-wrapper {
   min-height: 95%;
+  @media (--xs) {
+    padding: 15px;
+  }
+  @media (--gt-xs) {
+    padding: 30px;
+  }
 }
 
 /*GLOBAL*/
 a {
   text-decoration: none;
+}
+h1,h2,h3,h4,h5 {
+  color: var(--primary);
 }
 
 /*HEADER*/
@@ -59,6 +70,10 @@ a {
       }
     }
   }
+}
+
+.homepage-wrapper {
+
 }
 
 /*CHARTS*/
