@@ -60,3 +60,15 @@ a {
     }
   }
 }
+
+/*CHARTS*/
+#homepage-chart {
+  .c3-axis-y-label {
+    font-size: 16px;
+    font-weight: bold;
+    fill: var(--primary);
+  }
+  .c3-line-Imports, .c3-line-Exports {
+    stroke-width: 10px;
+  }
+}
