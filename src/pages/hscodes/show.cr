@@ -1,11 +1,6 @@
 class Hscodes::ShowPage < MainLayout
   needs hscode : Hscode
 
-  def inner_head
-    js_link asset("js/datatable.min.js")
-    css_link asset("css/datatable.min.css")
-  end
-
   def inner
     div class: "hscodes-wrapper" do
       div class: "hscodes-row-1" do
@@ -82,19 +77,7 @@ class Hscodes::ShowPage < MainLayout
   end
 
   private def imports_table
-    imports = LuckyRecord::Repo.run do |db|
-      db.query_all <<-SQL
-        SELECT imports.year, countries.name as country, sum(cif_usd_cents)::bigint as total
-        FROM imports
-        JOIN countries
-        ON countries.id = imports.origin_id
-        WHERE imports.hscode_id = #{@hscode.id}
-        GROUP BY imports.year, country
-        ORDER BY year DESC, total DESC;
-      SQL, as: TableRow
-    end
-
-    table class: "table table-bordered" do
+    table id: "hscode-imports-table", class: "table" do
       thead do
         tr do
           th "Year"
@@ -103,7 +86,7 @@ class Hscodes::ShowPage < MainLayout
         end
       end
       tbody do
-        imports.each do |row|
+        @hscode.imports_by_year.each do |row|
           tr do
             td row.year
             td row.country
@@ -111,23 +94,31 @@ class Hscodes::ShowPage < MainLayout
           end
         end
       end
+    end
+    div id: "imports-table-paging"
+
+    script do
+      raw %(
+        var hscodeImportsDatatable = new DataTable(document.querySelector('#hscode-imports-table'), {
+          pageSize: 10,
+          sort: [true, true, false],
+          filters: ['select', false, false],
+          filterText: 'Type to filter... ',
+          pagingDivSelector: "#imports-table-paging",
+          // data: {
+          //   url: "/hscodes/tables",
+          //   type: "get",
+          //   size: 157,
+          //   allInOne: false,
+          //   refresh: false
+          // }
+        });
+      )
     end
   end
 
   private def exports_table
-    exports = LuckyRecord::Repo.run do |db|
-      db.query_all <<-SQL
-        SELECT exports.year, countries.name as country, sum(fob_usd_cents)::bigint as total
-        FROM exports
-        JOIN countries
-        ON countries.id = exports.destination_id
-        WHERE exports.hscode_id = #{@hscode.id}
-        GROUP BY exports.year, country
-        ORDER BY year DESC, total DESC;
-      SQL, as: TableRow
-    end
-
-    table class: "table table-bordered" do
+    table id: "hscode-exports-table", class: "table" do
       thead do
         tr do
           th "Year"
@@ -136,7 +127,7 @@ class Hscodes::ShowPage < MainLayout
         end
       end
       tbody do
-        exports.each do |row|
+        @hscode.exports_by_year.each do |row|
           tr do
             td row.year
             td row.country
@@ -145,13 +136,25 @@ class Hscodes::ShowPage < MainLayout
         end
       end
     end
-  end
-end
+    div id: "exports-table-paging"
 
-class TableRow
-  DB.mapping({
-    year: Int32,
-    country: String,
-    total: Int64
-  })
+    script do
+      raw %(
+        var hscodeExportsDatatable = new DataTable(document.querySelector('#hscode-exports-table'), {
+          pageSize: 10,
+          sort: [true, true, false],
+          filters: ['select', false, false],
+          filterText: 'Type to filter... ',
+          pagingDivSelector: "#exports-table-paging",
+          // data: {
+          //   url: "/hscodes/tables",
+          //   type: "get",
+          //   size: 157,
+          //   allInOne: false,
+          //   refresh: false
+          // }
+        });
+      )
+    end
+  end
 end

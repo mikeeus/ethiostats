@@ -149,6 +149,7 @@ input[name="search-hscodes"] {
       flex-flow: column;
     }
     .hscodes-rates {
+      flex: 1;
       h2 {
         text-align: center;
       }
@@ -189,6 +190,21 @@ input[name="search-hscodes"] {
       white-space: nowrap;
       display: block;
       overflow: hidden;
+    }
+  }
+  .hscodes-row-3 {
+    display: flex;
+    @media (--xs) {
+      flex-flow: column;
+    }
+    .imports-table, .exports-table {
+      flex: 1;
+      table {
+        width: 100%;
+        th {
+          text-align: left;
+        }
+      }
     }
   }
 }
