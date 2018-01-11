@@ -1,6 +1,13 @@
 class HscodeQuery < Hscode::BaseQuery
-  # Returns hscodes that belongs the same HS chapter
-  def related
-    chapter.hscodes.reject { |hs| hs.id == id }
+  def search(term : String)
+    description.ilike("%#{term}%")
+  end
+
+  def to_json_array
+    Hscodes::IndexSerializer.new(self.results).render
+  end
+
+  def to_json
+    Hscodes::ShowSerializer.new(self.results).render
   end
 end
