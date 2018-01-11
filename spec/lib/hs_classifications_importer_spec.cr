@@ -1,10 +1,11 @@
 require "csv"
 require "../spec_helper.cr"
+require "../support/factories.cr"
 
 describe HsClassificationImporter do
   # First we import the test classifications
   Spec.before_each do
-    import_test_hs_classifications
+    seed_hs_classifications
   end
 
   # NOTE: `spec_helper` truncates the database after each test

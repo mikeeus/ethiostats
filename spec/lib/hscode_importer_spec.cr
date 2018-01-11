@@ -1,11 +1,11 @@
 require "csv"
 require "../spec_helper.cr"
-require "./test_data.cr"
+require "../support/factories.cr"
 
 describe HscodeImporter do
   # We'll import the hs classes then the hscodes from our csv objects.
   Spec.before_each do
-    import_test_hscodes
+    seed_hscodes
   end
 
   # NOTE: `spec_helper` truncates the database after each test

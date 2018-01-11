@@ -2,7 +2,115 @@
 
 /* Uncomment these when you add files to variables, mixins or components */
 
-/* @import "variables/**.pcss"; */
-/* @import "mixins/**.pcss"; */
+@import "variables/**.pcss";
+@import "mixins/**.pcss";
+@import "components/**.pcss";
 /* For example, add `static/css/components/btn.pcss` and uncomment the next line */
-/* @import "components/**.pcss"; */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Dosis, Helvetica, sans-serif;
+  font-size: 20px;
+  color: var(--grey7);
+}
+body {
+  padding-top: 68px;
+}
+* {
+  box-sizing: border-box;
+}
+#content-wrapper {
+  min-height: 95%;
+  @media (--xs) {
+    padding: 15px;
+  }
+  @media (--gt-xs) {
+    padding: 15px 30px;
+  }
+}
+
+/*GLOBAL*/
+a {
+  text-decoration: none;
+  color: var(--secondary);
+}
+h1, h2, h3, h4, h5 {
+  color: var(--primary);
+}
+
+/*HEADER*/
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  width: 100%;
+  background: white;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  -webkit-box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
+  .brand {
+    letter-spacing: 3px;
+    margin-right: auto;
+    text-align: center;
+    line-height: 48px;
+    padding: 0 10px;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--primary);
+  }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline-block;
+      a {
+        color: var(--primary);
+      }
+    }
+  }
+}
+
+.homepage-wrapper {
+
+}
+
+/*Autocomplete*/
+input[name="search-hscodes"] {
+  width: 100%;
+  padding: 6px 15px;
+  font-family: Dosis, Helvetica, sans-serif;
+  font-weight: bold;
+  color: var(--grey7);
+  &:focus {
+    color: var(--primary);
+  }
+  border: 1px solid var(--grey7);
+  border-radius: 3px;
+}
+.autocomplete-search-hscodes {
+  cursor: pointer;
+  .code {
+    display: inline-block;
+    width: 90px;
+  }
+  b {
+    color: var(--primary);
+  }
+}
+
+/*CHARTS*/
+#homepage-chart {
+  .c3-axis-y-label {
+    font-size: 16px;
+    font-weight: bold;
+    fill: var(--primary);
+  }
+  .c3-line-Imports, .c3-line-Exports {
+    stroke-width: 10px;
+  }
+}

@@ -2,6 +2,9 @@ abstract class MainLayout
   include Lucky::HTMLPage
   include Shared::FieldErrorsComponent
   include Shared::FlashComponent
+  include Shared::ChartsComponents
+  include Layout::HeaderComponent
+  include Layout::FooterComponent
 
   # You can put things here that all pages need
   #
@@ -19,17 +22,25 @@ abstract class MainLayout
         title page_title
         css_link asset("css/app.css")
         js_link asset("js/app.js")
+        css_link asset("css/auto-complete.css")
+        js_link asset("js/auto-complete.min.js")
+        c3_scripts_and_css
         csrf_meta_tags
+        meta name: "viewport", content: "width=device-width, initial-scale=1"
       end
 
       body do
         render_flash
-        inner
+        header
+        div id: "content-wrapper" do
+          inner
+        end
+        footer
       end
     end
   end
 
   def page_title
-    "Welcome to Lucky"
+    "Ethiostats"
   end
 end

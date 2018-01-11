@@ -15,12 +15,10 @@ class ImportHsClassifications < LuckyCli::Task
   def import_hs_classifications
     puts "Importing HS classifications"
 
-    file_path = "static/records/csv/hs_classification.csv"
-
     # Get csv length for progress bar
-    length = csv_length(file_path)
+    length = csv_length(@csv_hs_class_path)
 
-    File.open(file_path) do |f|
+    File.open(@csv_hs_class_path) do |f|
       # Instantiate CSV
       csv = CSV.new(f, headers: true)
 

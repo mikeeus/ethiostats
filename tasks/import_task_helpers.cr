@@ -1,6 +1,12 @@
 require "csv"
 
 module ImportTaskHelpers
+  @yaml_countries_path = "records/countries.yaml"
+  @csv_hs_class_path = "records/csv/hs_classification.csv"
+  @csv_tariffs_path = "records/csv/tariffs.csv"
+  @csv_imports_path = "records/csv/imports"
+  @csv_exports_path = "records/csv/exports"
+
   private def csv_length(file_path)
     length = 0
     File.open(file_path) do |f|
