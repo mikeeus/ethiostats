@@ -11,6 +11,8 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: Dosis, Helvetica, sans-serif;
+  font-size: 20px;
+  color: var(--grey7);
 }
 body {
   padding-top: 68px;
@@ -24,7 +26,7 @@ body {
     padding: 15px;
   }
   @media (--gt-xs) {
-    padding: 30px;
+    padding: 15px 30px;
   }
 }
 
@@ -33,7 +35,7 @@ a {
   text-decoration: none;
   color: var(--secondary);
 }
-h1,h2,h3,h4,h5 {
+h1, h2, h3, h4, h5 {
   color: var(--primary);
 }
 
@@ -42,7 +44,7 @@ h1,h2,h3,h4,h5 {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 999999;
   width: 100%;
   background: white;
   box-sizing: border-box;
@@ -75,6 +77,30 @@ h1,h2,h3,h4,h5 {
 
 .homepage-wrapper {
 
+}
+
+/*Autocomplete*/
+input[name="search-hscodes"] {
+  width: 100%;
+  padding: 6px 15px;
+  font-family: Dosis, Helvetica, sans-serif;
+  font-weight: bold;
+  color: var(--grey7);
+  &:focus {
+    color: var(--primary);
+  }
+  border: 1px solid var(--grey7);
+  border-radius: 3px;
+}
+.autocomplete-search-hscodes {
+  cursor: pointer;
+  .code {
+    display: inline-block;
+    width: 90px;
+  }
+  b {
+    color: var(--primary);
+  }
 }
 
 /*CHARTS*/

@@ -39,5 +39,4 @@ module Charts::HomepageComponent
       )
     end
   end
-
 end
