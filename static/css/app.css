@@ -76,7 +76,31 @@ h1, h2, h3, h4, h5 {
 }
 
 .homepage-wrapper {
-
+  max-width: 1120px;
+  margin: auto;
+  h1, h2 {
+    text-align: center;
+  }
+  /*
+  @media (--gt-sm) {
+    .homepage-chart-intro {
+      display: flex;
+      flex-flow: row;
+      .homepage-chart, .homepage-intro {
+        flex: 1;
+      }
+      .homepage-chart {
+        width: 50%;
+        #homepage-chart {
+          width: 100%;
+          svg {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  */
 }
 
 /*Autocomplete*/
