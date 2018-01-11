@@ -2,7 +2,61 @@
 
 /* Uncomment these when you add files to variables, mixins or components */
 
-/*@import "variables/**.pcss";*/
+@import "variables/**.pcss";
 /*@import "mixins/**.pcss";*/
 @import "components/**.pcss";
 /* For example, add `static/css/components/btn.pcss` and uncomment the next line */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Dosis, Helvetica, sans-serif;
+}
+body {
+  padding-top: 68px;
+}
+
+#content-wrapper {
+  min-height: 95%;
+}
+
+/*GLOBAL*/
+a {
+  text-decoration: none;
+}
+
+/*HEADER*/
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  width: 100%;
+  background: white;
+  box-sizing: border-box;
+  padding: 10px;
+  display: flex;
+  -webkit-box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
+  .brand {
+    letter-spacing: 3px;
+    margin-right: auto;
+    text-align: center;
+    line-height: 48px;
+    padding: 0 10px;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--primary);
+  }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline-block;
+      a {
+        color: var(--primary);
+      }
+    }
+  }
+}
