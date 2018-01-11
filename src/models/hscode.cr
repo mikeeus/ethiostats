@@ -26,4 +26,46 @@ class Hscode < BaseModel
   def related
     chapter.hscodes.reject { |hs| hs.id == id }
   end
+
+  def exports_by_year(page = 1, page_length = 10)
+    LuckyRecord::Repo.run do |db|
+      db.query_all <<-SQL
+        SELECT exports.year, countries.name as country, sum(fob_usd_cents)::bigint as total
+        FROM exports
+        JOIN countries
+        ON countries.id = exports.destination_id
+        JOIN hscodes ON hscodes.id = exports.hscode_id
+        WHERE hscodes.code = $1
+        GROUP BY exports.year, country
+        ORDER BY year DESC, total DESC
+        LIMIT #{page_length}
+        OFFSET #{(page - 1) * page_length};
+      SQL, code, as: TableRow
+    end
+  end
+
+  def imports_by_year(page = 1, page_length = 10)
+    LuckyRecord::Repo.run do |db|
+      db.query_all <<-SQL
+        SELECT imports.year, countries.name as country, sum(cif_usd_cents)::bigint as total
+        FROM imports
+        JOIN countries
+        ON countries.id = imports.origin_id
+        JOIN hscodes ON hscodes.id = imports.hscode_id
+        WHERE hscodes.code = $1
+        GROUP BY imports.year, country
+        ORDER BY year DESC, total DESC
+        LIMIT #{page_length}
+        OFFSET #{(page - 1) * page_length};
+      SQL, code, as: TableRow
+    end
+  end
+end
+
+class TableRow
+  DB.mapping({
+    year: Int32,
+    country: String,
+    total: Int64
+  })
 end
