@@ -29,12 +29,14 @@ body {
   @media (--gt-xs) {
     padding: 15px 30px;
   }
+  padding-bottom: 150px;
 }
 
 /*GLOBAL*/
 a {
   text-decoration: none;
-  color: var(--secondary);
+  color: var(--accent);
+  font-weight: bold;
 }
 h1, h2, h3, h4, h5 {
   color: white;
@@ -232,4 +234,15 @@ input[name="search-hscodes"] {
       }
     }
   }
+}
+
+/*FOOTER*/
+footer.footer {
+  padding: 25px;
+  background: white;
+  text-align: right;
+  color: var(--grey7);
+  a {
+    color: var(--primary);
+  };
 }
