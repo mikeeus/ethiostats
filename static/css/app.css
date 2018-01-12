@@ -12,10 +12,11 @@ html, body {
   margin: 0;
   font-family: Dosis, Helvetica, sans-serif;
   font-size: 20px;
-  color: var(--grey7);
+  color: white;
 }
 body {
   padding-top: 68px;
+  background: var(--primary);
 }
 * {
   box-sizing: border-box;
@@ -36,7 +37,7 @@ a {
   color: var(--secondary);
 }
 h1, h2, h3, h4, h5 {
-  color: var(--primary);
+  color: white;
 }
 
 /*HEADER*/
