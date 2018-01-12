@@ -2,7 +2,7 @@ abstract class MainLayout
   include Lucky::HTMLPage
   include Shared::FieldErrorsComponent
   include Shared::FlashComponent
-  include Shared::ChartsComponents
+  include Charts::Components
   include Layout::HeaderComponent
   include Layout::FooterComponent
 

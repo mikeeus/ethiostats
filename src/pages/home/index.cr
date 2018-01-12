@@ -1,6 +1,6 @@
 class Home::IndexPage < MainLayout
   include Hscodes::AutocompleteComponent
-  include Charts::HomepageComponent
+  include Charts::Components
 
   def inner
     div class: "homepage-wrapper" do

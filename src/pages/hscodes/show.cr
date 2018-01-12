@@ -1,4 +1,5 @@
 class Hscodes::ShowPage < MainLayout
+  include Charts::Components
   needs hscode : Hscode
 
   def inner
@@ -14,23 +15,25 @@ class Hscodes::ShowPage < MainLayout
       end
       div class: "hscodes-row-2" do
         div class: "hscodes-chart" do
-          text "Chart"
+          hscode_annual_totals_chart(@hscode.id)
         end
-
+      end
+      div class: "hscodes-row-3" do
         related_hscodes
       end
 
-      div class: "hscodes-row-3" do
-        div class: "imports-table" do
-          h3 "Imports"
-          imports_table
-        end
+      # TASK: Troubleshoot ajax data loading, or use a different tables lib
+      # div class: "hscodes-row-3" do
+      #   div class: "imports-table" do
+      #     h3 "Imports"
+      #     imports_table
+      #   end
 
-        div class: "exports-table" do
-          h3 "Exports"
-          exports_table
-        end
-      end
+      #   div class: "exports-table" do
+      #     h3 "Exports"
+      #     exports_table
+      #   end
+      # end
     end
   end
 
@@ -101,7 +104,7 @@ class Hscodes::ShowPage < MainLayout
       raw %(
         var hscodeImportsDatatable = new DataTable(document.querySelector('#hscode-imports-table'), {
           pageSize: 10,
-          sort: [true, true, false],
+          sort: [true, true, true],
           filters: ['select', false, false],
           filterText: 'Type to filter... ',
           pagingDivSelector: "#imports-table-paging",
@@ -142,7 +145,7 @@ class Hscodes::ShowPage < MainLayout
       raw %(
         var hscodeExportsDatatable = new DataTable(document.querySelector('#hscode-exports-table'), {
           pageSize: 10,
-          sort: [true, true, false],
+          sort: [true, true, true],
           filters: ['select', false, false],
           filterText: 'Type to filter... ',
           pagingDivSelector: "#exports-table-paging",

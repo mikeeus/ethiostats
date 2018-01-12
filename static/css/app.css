@@ -129,16 +129,37 @@ input[name="search-hscodes"] {
 }
 
 /*CHARTS*/
-#homepage-chart {
+#homepage-chart, #hscode-chart {
   .c3-axis-y-label {
     font-size: 16px;
     font-weight: bold;
-    fill: var(--primary);
+    fill: white;
   }
   .c3-line-Imports, .c3-line-Exports {
     stroke-width: 10px;
   }
 }
+.c3 line, .c3 path, g.tick line {
+  stroke: white !important;
+}
+.c3-legend-item {
+  fill: white;
+}
+.c3-axis, .c3-axis-y {
+  fill: white;
+  @media (--gt-xs) {
+    font-weight: bold;
+    font-size: 13px;
+  }
+}
+/*
+.c3-region.c3-region-lt2007 {
+  fill: yellow;
+}
+.c3-region.c3-region-gte2007 {
+  fill: white;
+}
+*/
 
 /*HSCODES*/
 .hscodes-wrapper {
@@ -180,6 +201,9 @@ input[name="search-hscodes"] {
   .hscodes-row-2 {
     @media (--xs) {
       flex-flow: column;
+    }
+    .hscodes-chart {
+      flex: 1;
     }
   }
   .hscodes-related {
