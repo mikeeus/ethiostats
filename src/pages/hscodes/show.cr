@@ -52,27 +52,27 @@ class Hscodes::ShowPage < MainLayout
     div class: "hscodes-rates" do
       div class: "rates" do
         div do
-          text "Duty"
+          span "Duty"
           span @hscode.duty.to_s + " %"
         end
         div do
-          text "Excise"
+          span "Excise"
           span @hscode.excise.to_s + " %"
         end
         div do
-          text "VAT"
+          span "VAT"
           span @hscode.vat.to_s + " %"
         end
         div do
-          text "Sur"
+          span "Sur"
           span @hscode.sur.to_s + " %"
         end
         div do
-          text "Withholding"
+          span "Withholding"
           span @hscode.withholding.to_s + " %"
         end
         div do
-          text "Export duty"
+          span "Export duty"
           span @hscode.export_duty.to_s + " %"
         end
       end

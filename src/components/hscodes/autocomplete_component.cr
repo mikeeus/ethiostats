@@ -2,22 +2,20 @@ module Hscodes::AutocompleteComponent
   private def search_hscodes
     h2 "Search records"
     para "You can find tax rates, imports or exports by country and year, and more."
-    input id: "search-hscodes", name: "search-hscodes", placeholder: "eg. Coffee, Gold, Petroleum, ..."
 
-    hscode_autocomplete
+    hscode_autocomplete "eg. Coffee, Gold, Petroleum, ..."
   end
 
-  private def hscode_autocomplete
+  private def hscode_autocomplete(placeholder : String, selector = "search-hscodes")
+    input class: "search-hscodes-autocomplete", name: selector, placeholder: placeholder
+
     script do
       raw %(
         new autoComplete({
-          selector: 'input[name="search-hscodes"]',
+          selector: 'input[name="#{selector}"]',
           source: function(term, response) {
-            console.log('query: ', term);
-
             try { xhr.abort(); } catch(e){}
             xhr = $.getJSON('/hscodes/search', { term: term }, function(data) {
-              console.log('response: ', data);
               response(data);
             });
           },
@@ -32,15 +30,12 @@ module Hscodes::AutocompleteComponent
           },
           menuClass: "autocomplete-search-hscodes",
           onSelect: (e, term, item) => {
-            console.log('term: ', term);
-            console.log('item: ', item);
-            console.log('e: ', e);
             var code = item.getAttribute('data-code');
             window.location.href = "/hscodes/" + code;
           }
         });
 
-        document.getElementById('search-hscodes').addEventListener('focus', (e) => {
+        document.getElementById('#{selector}').addEventListener('focus', (e) => {
           var dropdown = document.getElementsByClassName('autocomplete-search-hscodes')[0];
           dropdown.style.display = 'block';
         })

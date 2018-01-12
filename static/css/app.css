@@ -29,7 +29,7 @@ body {
   @media (--gt-xs) {
     padding: 15px 30px;
   }
-  padding-bottom: 150px;
+  padding-bottom: 100px;
 }
 
 /*GLOBAL*/
@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5 {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 999999;
+  z-index: 999;
   width: 100%;
   background: white;
   box-sizing: border-box;
@@ -55,6 +55,9 @@ h1, h2, h3, h4, h5 {
   display: flex;
   -webkit-box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
+  @media (--xs) {
+    flex-flow: column;
+  }
   .brand {
     letter-spacing: 3px;
     margin-right: auto;
@@ -78,36 +81,27 @@ h1, h2, h3, h4, h5 {
   }
 }
 
+/*FOOTER*/
+footer.footer {
+  padding: 25px;
+  background: white;
+  text-align: right;
+  color: var(--grey7);
+  a {
+    color: var(--primary);
+  };
+}
+
 .homepage-wrapper {
   max-width: 1120px;
   margin: auto;
   h1, h2 {
     text-align: center;
   }
-  /*
-  @media (--gt-sm) {
-    .homepage-chart-intro {
-      display: flex;
-      flex-flow: row;
-      .homepage-chart, .homepage-intro {
-        flex: 1;
-      }
-      .homepage-chart {
-        width: 50%;
-        #homepage-chart {
-          width: 100%;
-          svg {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
-  */
 }
 
 /*Autocomplete*/
-input[name="search-hscodes"] {
+input.search-hscodes-autocomplete {
   width: 100%;
   padding: 6px 15px;
   font-family: Dosis, Helvetica, sans-serif;
@@ -172,6 +166,9 @@ input[name="search-hscodes"] {
     @media (--lt-md) {
       flex-flow: column;
     }
+    .hscodes-code {
+      padding-right: 15px;
+    }
     .hscodes-rates {
       flex: 1;
       h2 {
@@ -189,9 +186,10 @@ input[name="search-hscodes"] {
         div {
           flex: 1;
           text-align: center;
-          border: 1px solid;
           font-weight: bold;
-          padding: 5px;
+          padding: 15px;
+          font-size: 15px;
+          background: #ffffff14;
           span {
             margin-top: 15px;
             display: block;
@@ -234,15 +232,4 @@ input[name="search-hscodes"] {
       }
     }
   }
-}
-
-/*FOOTER*/
-footer.footer {
-  padding: 25px;
-  background: white;
-  text-align: right;
-  color: var(--grey7);
-  a {
-    color: var(--primary);
-  };
 }

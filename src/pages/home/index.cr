@@ -5,7 +5,7 @@ class Home::IndexPage < MainLayout
   def inner
     div class: "homepage-wrapper" do
       # h1 "Ethiopian Trade Statistics"
-      search_hscodes
+      # para "Find Ethiopian tax rates and import/export data."
       div class: "homepage-chart-intro" do
         div class: "homepage-chart" do
           homepage_chart
