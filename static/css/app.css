@@ -12,10 +12,11 @@ html, body {
   margin: 0;
   font-family: Dosis, Helvetica, sans-serif;
   font-size: 20px;
-  color: var(--grey7);
+  color: white;
 }
 body {
   padding-top: 68px;
+  background: var(--primary);
 }
 * {
   box-sizing: border-box;
@@ -28,15 +29,17 @@ body {
   @media (--gt-xs) {
     padding: 15px 30px;
   }
+  padding-bottom: 100px;
 }
 
 /*GLOBAL*/
 a {
   text-decoration: none;
-  color: var(--secondary);
+  color: var(--accent);
+  font-weight: bold;
 }
 h1, h2, h3, h4, h5 {
-  color: var(--primary);
+  color: white;
 }
 
 /*HEADER*/
@@ -44,7 +47,7 @@ h1, h2, h3, h4, h5 {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 999999;
+  z-index: 999;
   width: 100%;
   background: white;
   box-sizing: border-box;
@@ -52,6 +55,9 @@ h1, h2, h3, h4, h5 {
   display: flex;
   -webkit-box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
+  @media (--xs) {
+    flex-flow: column;
+  }
   .brand {
     letter-spacing: 3px;
     margin-right: auto;
@@ -75,12 +81,27 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-.homepage-wrapper {
+/*FOOTER*/
+footer.footer {
+  padding: 25px;
+  background: white;
+  text-align: right;
+  color: var(--grey7);
+  a {
+    color: var(--primary);
+  };
+}
 
+.homepage-wrapper {
+  max-width: 1120px;
+  margin: auto;
+  h1, h2 {
+    text-align: center;
+  }
 }
 
 /*Autocomplete*/
-input[name="search-hscodes"] {
+input.search-hscodes-autocomplete {
   width: 100%;
   padding: 6px 15px;
   font-family: Dosis, Helvetica, sans-serif;
@@ -104,13 +125,111 @@ input[name="search-hscodes"] {
 }
 
 /*CHARTS*/
-#homepage-chart {
+#homepage-chart, #hscode-chart {
   .c3-axis-y-label {
     font-size: 16px;
     font-weight: bold;
-    fill: var(--primary);
+    fill: white;
   }
   .c3-line-Imports, .c3-line-Exports {
     stroke-width: 10px;
+  }
+}
+.c3 line, .c3 path, g.tick line {
+  stroke: white !important;
+}
+.c3-legend-item {
+  fill: white;
+}
+.c3-axis, .c3-axis-y {
+  fill: white;
+  @media (--gt-xs) {
+    font-weight: bold;
+    font-size: 13px;
+  }
+}
+/*
+.c3-region.c3-region-lt2007 {
+  fill: yellow;
+}
+.c3-region.c3-region-gte2007 {
+  fill: white;
+}
+*/
+
+/*HSCODES*/
+.hscodes-wrapper {
+  .hscodes-row-1, .hscodes-row-2, .hscodes-row-3 {
+    display: flex;
+  }
+  .hscodes-row-1 {
+    @media (--lt-md) {
+      flex-flow: column;
+    }
+    .hscodes-code {
+      padding-right: 15px;
+    }
+    .hscodes-rates {
+      flex: 1;
+      h2 {
+        text-align: center;
+      }
+      .rates {
+        flex: 1;
+        display: flex;
+        @media (--xs) {
+          flex-flow: row wrap;
+        }
+        @media (--gt-xs) {
+          flex-flow: row;
+        }
+        div {
+          flex: 1;
+          text-align: center;
+          font-weight: bold;
+          padding: 15px;
+          font-size: 15px;
+          background: #ffffff14;
+          span {
+            margin-top: 15px;
+            display: block;
+          }
+        }
+      }
+    }
+  }
+  .hscodes-row-2 {
+    @media (--xs) {
+      flex-flow: column;
+    }
+    .hscodes-chart {
+      flex: 1;
+    }
+  }
+  .hscodes-related {
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 0;
+    a {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+      overflow: hidden;
+    }
+  }
+  .hscodes-row-3 {
+    display: flex;
+    @media (--xs) {
+      flex-flow: column;
+    }
+    .imports-table, .exports-table {
+      flex: 1;
+      table {
+        width: 100%;
+        th {
+          text-align: left;
+        }
+      }
+    }
   }
 }

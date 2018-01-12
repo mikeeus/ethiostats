@@ -2,7 +2,7 @@ abstract class MainLayout
   include Lucky::HTMLPage
   include Shared::FieldErrorsComponent
   include Shared::FlashComponent
-  include Shared::ChartsComponents
+  include Charts::Components
   include Layout::HeaderComponent
   include Layout::FooterComponent
 
@@ -24,6 +24,8 @@ abstract class MainLayout
         js_link asset("js/app.js")
         css_link asset("css/auto-complete.css")
         js_link asset("js/auto-complete.min.js")
+        js_link asset("js/datatable.min.js")
+        css_link asset("css/datatable.min.css")
         c3_scripts_and_css
         csrf_meta_tags
         meta name: "viewport", content: "width=device-width, initial-scale=1"

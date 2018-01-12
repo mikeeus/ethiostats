@@ -4,5 +4,7 @@ class Chapter < BaseModel
 
     field code : String
     field description : String
+
+    has_many hscodes : Hscode
   end
 end
