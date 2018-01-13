@@ -74,7 +74,7 @@ class HscodeImporter
     write_out_errors
     if @show_progress
       count = HscodeQuery.new.count
-      puts "Success: There are #{count} Imports in the database."
+      puts "Success: There are #{count} Hscodes in the database."
     end
   end
 

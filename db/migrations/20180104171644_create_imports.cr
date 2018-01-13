@@ -8,14 +8,14 @@ class CreateImports::V20180104171644 < LuckyMigrator::Migration::V1
       add year : Int32
       add month : Int32?
       add cpc : String?
-      add quantity : Int32?
+      add quantity : Int64?
 
-      add mass_gross_kg : Int32?
-      add mass_net_kg : Int32
-      add cif_etb_cents : Int32
-      add cif_usd_cents : Int32
-      add tax_etb_cents : Int32?
-      add tax_usd_cents : Int32?
+      add mass_gross_kg : Int64?
+      add mass_net_kg : Int64
+      add cif_etb_cents : Int64
+      add cif_usd_cents : Int64
+      add tax_etb_cents : Int64?
+      add tax_usd_cents : Int64?
 
       add unique_hash : String, unique: true
     end

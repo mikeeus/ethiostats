@@ -8,14 +8,14 @@ class Import < BaseModel
     field year : Int32
     field month : Int32?
     field cpc : String?
-    field quantity : Int32?
+    field quantity : Int64?
 
-    field mass_gross_kg : Int32?
-    field mass_net_kg : Int32
-    field cif_etb_cents : Int32
-    field cif_usd_cents : Int32
-    field tax_etb_cents : Int32?
-    field tax_usd_cents : Int32?
+    field mass_gross_kg : Int64?
+    field mass_net_kg : Int64
+    field cif_etb_cents : Int64
+    field cif_usd_cents : Int64
+    field tax_etb_cents : Int64?
+    field tax_usd_cents : Int64?
 
     field unique_hash : String
   end

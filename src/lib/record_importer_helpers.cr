@@ -20,7 +20,7 @@ module RecordImporterHelpers
     if value.empty?
       default
     else
-      value.to_f.to_i.to_s
+      value.to_f.to_i64.to_s
     end
   end
 
@@ -41,7 +41,7 @@ module RecordImporterHelpers
   end
 
   private def to_cents(value)
-    (value.to_f * 100).to_i.to_s
+    (value.to_f * 100).to_i64.to_s
   end
 
   def create_missing_hscode(row)
