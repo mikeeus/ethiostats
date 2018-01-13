@@ -1,2 +1,2 @@
 web: ./app
-release: lucky db.migrate
+release: lucky db.create && db.migrate
