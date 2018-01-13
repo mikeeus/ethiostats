@@ -3,14 +3,14 @@ class ChartQuery
     statement = <<-SQL
       SELECT i.year, i.total as imports_total, e.total as exports_total
       FROM (
-        SELECT year, sum(cif_usd_cents) as total
+        SELECT year, sum(cif_usd_cents)::bigint as total
         FROM imports
         #{imports_where_clause}
         GROUP BY year
         ORDER BY year
       ) i
       INNER JOIN (
-        SELECT year, sum(fob_usd_cents) as total
+        SELECT year, sum(fob_usd_cents)::bigint as total
         FROM exports
         #{exports_where_clause}
         GROUP BY year
