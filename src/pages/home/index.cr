@@ -18,7 +18,7 @@ class Home::IndexPage < MainLayout
   end
 
   private def home_intro
-    para "The purpose of this site is to make Ethiopian import and export statistics available in a userfriendly and clear format in order to promote:"
+    para "The purpose of this site is to make Ethiopian import and export statistics available in a user-friendly and clear format in order to promote:"
     ul do
       li do
         h3 "Investment"
