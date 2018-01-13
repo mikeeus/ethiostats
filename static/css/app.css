@@ -168,6 +168,8 @@ input.search-hscodes-autocomplete {
     }
     .hscodes-code {
       padding-right: 15px;
+      flex: 1;
+      font-size: 24px;
     }
     .hscodes-rates {
       flex: 1;

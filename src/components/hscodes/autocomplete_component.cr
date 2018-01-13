@@ -7,8 +7,9 @@ module Hscodes::AutocompleteComponent
   end
 
   private def hscode_autocomplete(placeholder : String, selector = "search-hscodes")
-    input class: "search-hscodes-autocomplete", name: selector, placeholder: placeholder
+    input id: selector, class: "search-hscodes-autocomplete", name: selector, placeholder: placeholder
 
+    element = "ac" + selector.gsub("-", "_")
     script do
       raw %(
         new autoComplete({
@@ -35,10 +36,13 @@ module Hscodes::AutocompleteComponent
           }
         });
 
-        document.getElementById('#{selector}').addEventListener('focus', (e) => {
-          var dropdown = document.getElementsByClassName('autocomplete-search-hscodes')[0];
-          dropdown.style.display = 'block';
-        })
+        var #{element} = document.getElementById('#{selector}');
+        if (#{element}) {
+          #{element}.addEventListener('focus', (e) => {
+            var dropdown = document.getElementsByClassName('autocomplete-search-hscodes')[0];
+            dropdown.style.display = 'block';
+          })
+        }
       )
     end
   end
