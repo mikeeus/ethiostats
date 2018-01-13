@@ -7,14 +7,14 @@ class CreateExports::V20180104171700 < LuckyMigrator::Migration::V1
       add year : Int32
       add month : Int32?
       add cpc : String?
-      add quantity : Int32?
+      add quantity : Int64?
 
-      add mass_gross_kg : Int32?
-      add mass_net_kg : Int32
-      add fob_etb_cents : Int32
-      add fob_usd_cents : Int32
-      add tax_etb_cents : Int32?
-      add tax_usd_cents : Int32?
+      add mass_gross_kg : Int64?
+      add mass_net_kg : Int64
+      add fob_etb_cents : Int64
+      add fob_usd_cents : Int64
+      add tax_etb_cents : Int64?
+      add tax_usd_cents : Int64?
 
       add unique_hash : String, unique: true
     end
