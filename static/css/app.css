@@ -15,12 +15,6 @@ html, body {
   color: white;
 }
 body {
-  @media (--gt-xs) {
-    padding-top: 68px;
-  }
-  @media (--xs) {
-    padding-top: 105px;
-  }
   background: var(--primary);
 }
 * {
@@ -49,10 +43,6 @@ h1, h2, h3, h4, h5 {
 
 /*HEADER*/
 .nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
   width: 100%;
   background: white;
   box-sizing: border-box;
@@ -71,7 +61,12 @@ h1, h2, h3, h4, h5 {
     padding: 0 10px;
     font-weight: 700;
     font-size: 22px;
+    text-transform: uppercase;
     color: var(--primary);
+    opacity: 0.8;
+    @media (--xs) {
+      padding: 0;
+    }
   }
   ul {
     list-style-type: none;
