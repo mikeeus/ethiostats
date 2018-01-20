@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+set -e
+
+if [! -f /swapfile ]; then
+  sudo fallocate -l 1G /swapfile
+  sudo chmod 600 /swapfile
+  sudo mkswap /swapfile
+fi
+
+sudo swapon /swapfile
