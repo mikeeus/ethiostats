@@ -70,13 +70,34 @@ module Charts::Components
           // ],
           axis: {
             y: {
-              label: {
-                text: 'Millions',
-                // position: 'outer-middle'
-              },
+              // label: {
+              //   text: 'Millions',
+              //   // position: 'outer-middle'
+              // },
               tick: {
-                format: d3.format('$,')
+                format: function(d) {
+                  if (d < 1000) {
+                    return "$" + d;
+                  }
+                  if (d < 1000000) {
+                    return "$" + (d / 1000) + " K";
+                  }
+                  if (d < 1000000000) {
+                    return "$" + (d / 1000000) + " M";
+                  }
+                  return "$" + (d / 1000000000) + " B";
+                }
               }
+            }
+          },
+          tooltip: {
+            format: {
+              title: function (d) { return 'Data ' + d; },
+              //value: function (value, ratio, id) {
+              //    var format = id === 'data1' ? d3.format(',') : d3.format('$');
+              //    return format(value);
+              //}
+              value: d3.format('$,') // apply this format to both y and y2
             }
           }
         });
