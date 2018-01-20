@@ -5,14 +5,14 @@ class ChartQuery
       FROM (
         SELECT year, sum(cif_usd_cents)::bigint as total
         FROM imports
-        #{imports_where_clause}
+        where imports.hscode_id = 1131
         GROUP BY year
         ORDER BY year
       ) i
-      INNER JOIN (
+      LEFT JOIN (
         SELECT year, sum(fob_usd_cents)::bigint as total
         FROM exports
-        #{exports_where_clause}
+        where exports.hscode_id = 1131
         GROUP BY year
         ORDER BY year
       ) e
