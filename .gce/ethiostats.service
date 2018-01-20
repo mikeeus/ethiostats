@@ -8,7 +8,6 @@ Environment="APP_DOMAIN=ethiostats.mikias.net"
 Environment="PATH=/home/itsmikias/.libs/crystal/bin:/bin:/usr/bin"
 Environment="SECRET_KEY_BASE=Gzm6A80+5ZGYcdyopLKQSbc3rd03zif5QLFVoRYZ+J4="
 User=itsmikias
-Type=forking
 WorkingDirectory=/home/itsmikias/ethiostats
 ExecStart=/home/itsmikias/ethiostats/app
 Restart=on-failure
