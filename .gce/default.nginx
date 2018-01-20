@@ -1,0 +1,43 @@
+# Redirect http to https
+server {
+    listen 80;
+    server_name ethiostats.mikias.net www.ethiostats.mikias.net;
+    rewrite     ^   https://$host$request_uri? permanent;
+}
+
+server {
+    # http2 requires nginx version >= 1.9.5
+    listen 443 ssl http2;
+
+    server_name ethiostats.mikias.net www.ethiostats.mikias.net;
+
+    ssl_certificate /etc/letsencrypt/live/ethiostats.mikias.net/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ethiostats.mikias.net/privkey.pem;
+
+    # Turn on OCSP stapling as recommended at
+    # https://community.letsencrypt.org/t/integration-guide/13123
+    # requires nginx version >= 1.3.7
+    ssl_stapling on;
+    ssl_stapling_verify on;
+
+    # Uncomment this line only after testing in browsers,
+    # as it commits you to continuing to serve your site over HTTPS
+    # in future
+    add_header Strict-Transport-Security "max-age=31536000";
+
+    access_log /var/log/nginx/sub.log combined;
+
+    # maintain the .well-known directory alias for renewals
+    location /.well-known {
+        alias /home/itsmikias/.well-known;
+    }
+
+    location / {
+      proxy_pass http://127.0.0.1:8080;
+      proxy_set_header Real-IP $remote_addr;
+      proxy_set_header Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header NginX-Proxy true;
+      proxy_ssl_session_reuse off;
+      proxy_redirect off;
+    }
+}

@@ -1,0 +1,3 @@
+LINE='include "47 4,16   * * *   root   certbot renew --quiet --renew-hook \"service nginx reload\""'
+FILE=/etc/crontab
+grep -qF "$LINE" "/etc/crontab"  || echo "$LINE" | sudo tee --append "/etc/crontab"
