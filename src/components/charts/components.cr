@@ -39,7 +39,6 @@ module Charts::Components
     exports = ["Exports"] + annual_totals.map{ |a| (a.exports_total / 100).to_s }
     years = ["year"] + annual_totals.map(&.year)
 
-    pp annual_totals
     { years: years, imports: imports, exports: exports }
   end
 
