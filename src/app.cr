@@ -15,5 +15,6 @@ require "./handlers/**"
 require "../config/env"
 require "../config/**"
 require "./charms/**"
+require "./lib/scheduled/scheduler.cr"
 
 Habitat.raise_if_missing_settings!

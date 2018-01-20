@@ -16,3 +16,7 @@ server = HTTP::Server.new(host, port, [
 puts "Listening on http://#{host}:#{port}"
 
 server.listen
+
+puts "Starting scheduled tasks"
+
+Scheduler.new.schedule
