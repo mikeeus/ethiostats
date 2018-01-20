@@ -1,0 +1,84 @@
+#!/bin/bash -e
+
+set -e
+
+steptxt="----->"
+
+start() {
+    echo -n "$steptxt $@... "
+}
+
+finished() {
+    echo "done"
+}
+
+CURL="curl -s -L --retry 15 --retry-delay 2" # retry for up to 30 seconds
+
+# YAML parser from https://gist.github.com/pkuczynski/8665367
+parse_yaml() {
+   local prefix=$2
+   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+   sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+   awk -F$fs '{
+      indent = length($1)/2;
+      vname[indent] = $2;
+      for (i in vname) {if (i > indent) {delete vname[i]}}
+      if (length($3) > 0) {
+         vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+      }
+   }'
+}
+
+function json_value() {
+  KEY=$1
+  num=$2
+  awk -F"[,:}]" '{for(i=1;i<=NF;i++){if($i~/\042'$KEY'\042/){print $(i+1)}}}' | tr -d ' "' | sed -n ${num}p
+}
+
+BUILD_DIR=~/ethiostats
+
+# Get crystal version from .crystal-version file or latest release
+if [ -f $BUILD_DIR/.crystal-version ]; then
+  CRYSTAL_VERSION=`cat $BUILD_DIR/.crystal-version | tr -d '\012'`
+  CRYSTAL_VERSION_REASON='due to .crystal-version file'
+else
+  CRYSTAL_VERSION=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases/latest | json_value tag_name 1 | tr -d '\012'`
+  CRYSTAL_VERSION_REASON='due to latest release at https://github.com/crystal-lang/crystal'
+fi
+
+# Download crystal
+CRYSTAL_URL=`${CURL} https://api.github.com/repos/crystal-lang/crystal/releases/tags/${CRYSTAL_VERSION} | grep 'https://github.com/crystal-lang/crystal/releases/download/.*-linux-x86_64.tar.gz' | sed 's/.*: "\(.*\)"/\1/'`
+CRYSTAL_DIR=~/.libs/crystal
+unset GIT_DIR
+
+# Install Crystal
+mkdir -p $CRYSTAL_DIR
+start "Installing Crystal ($CRYSTAL_VERSION $CRYSTAL_VERSION_REASON) from $CRYSTAL_URL to $CRYSTAL_DIR"
+  ${CURL} $CRYSTAL_URL | tar xz -C $CRYSTAL_DIR --strip-component=1
+finished
+PATH="${PATH}:${CRYSTAL_DIR}/bin"
+echo "export PATH=\$HOME/.libs/crystal/bin:\$PATH"
+
+start "Installing Dependencies"
+  crystal deps --production
+finished
+
+# Compile assets and build app
+cd $BUILD_DIR
+
+eval $(parse_yaml shard.yml "shard_")
+start "Compiling src/${shard_name}.cr (auto-detected from shard.yml)"
+  bin/compile_assets build -e production
+  crystal build src/${shard_name}.cr --release --no-debug -o app
+finished
+
+start "Setting up Lucky tasks"
+
+mkdir -p ~/.libs/lucky
+crystal build tasks.cr -o ~/.libs/lucky/lucky
+
+echo "export PATH=\$PATH:\$HOME/.libs/lucky"
+
+finished
