@@ -44,6 +44,10 @@ shards:
     github: askn/progress
     commit: df7f323a334e025be8798b0c99cd7e0cebb473ed
 
+  schedule:
+    github: hugoabonizio/schedule.cr
+    version: 0.2.0
+
   shell-table:
     github: jwaldrip/shell-table.cr
     version: 0.9.2
