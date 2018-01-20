@@ -1,2 +1,2 @@
 git push origin master
-gcloud compute instances reset ethiostats --project ethiotradestats
+gcloud compute instances reset ethiostats --project ethiotradestats --zone us-central1-a
