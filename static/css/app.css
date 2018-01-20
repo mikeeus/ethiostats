@@ -15,7 +15,12 @@ html, body {
   color: white;
 }
 body {
-  padding-top: 68px;
+  @media (--gt-xs) {
+    padding-top: 68px;
+  }
+  @media (--xs) {
+    padding-top: 105px;
+  }
   background: var(--primary);
 }
 * {
@@ -123,6 +128,9 @@ input.search-hscodes-autocomplete {
     color: var(--primary);
   }
 }
+.autocomplete-suggestion {
+  line-height: 28px;
+}
 
 /*CHARTS*/
 #homepage-chart, #hscode-chart {
@@ -135,9 +143,11 @@ input.search-hscodes-autocomplete {
     stroke-width: 10px;
   }
 }
+/*
 .c3 line, .c3 path, g.tick line {
-  stroke: white !important;
+  stroke: white !important; # causes the legend items to be white
 }
+*/
 .c3-legend-item {
   fill: white;
 }
