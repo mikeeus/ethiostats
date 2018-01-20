@@ -9,7 +9,7 @@ bin/build
 lucky db.migrate
 
 # app systemd service
-if [! -f /lib/systemd/system/ethiostats.service ]; then
+if [ ! -f /lib/systemd/system/ethiostats.service ]; then
   cp .gce/ethiostats.service /lib/systemd/system/ethiostats.service
 fi
 sudo systemctl enable ethiostats.service
