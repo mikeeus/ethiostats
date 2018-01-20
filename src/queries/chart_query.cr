@@ -1,16 +1,19 @@
 class ChartQuery
   def self.annual_totals(imports_where_clause = nil, exports_where_clause = nil)
     statement = <<-SQL
-      SELECT i.year, i.total as imports_total, e.total as exports_total
+      SELECT
+        i.year,
+        COALESCE(i.total, 0)::bigint as imports_total,
+        COALESCE(e.total, 0)::bigint as exports_total
       FROM (
-        SELECT year, sum(cif_usd_cents)::bigint as total
+        SELECT year, SUM(cif_usd_cents) as total
         FROM imports
         #{imports_where_clause}
         GROUP BY year
         ORDER BY year
       ) i
       LEFT JOIN (
-        SELECT year, sum(fob_usd_cents)::bigint as total
+        SELECT year, SUM(fob_usd_cents) as total
         FROM exports
         #{exports_where_clause}
         GROUP BY year

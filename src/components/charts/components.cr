@@ -31,10 +31,15 @@ module Charts::Components
       raise "get_chart_data expects :homepage or :hscode, but :#{page} was given."
     end
 
-    imports = ["Imports"] + annual_totals.map{ |a| (a.imports_total / 100_000_000).to_s }
-    exports = ["Exports"] + annual_totals.map{ |a| (a.exports_total / 100_000_000).to_s }
+    prepare_annual_totals(annual_totals)
+  end
+
+  private def prepare_annual_totals(annual_totals)
+    imports = ["Imports"] + annual_totals.map{ |a| (a.imports_total / 100).to_s }
+    exports = ["Exports"] + annual_totals.map{ |a| (a.exports_total / 100).to_s }
     years = ["year"] + annual_totals.map(&.year)
 
+    pp annual_totals
     { years: years, imports: imports, exports: exports }
   end
 
