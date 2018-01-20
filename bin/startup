@@ -2,7 +2,7 @@
 
 set -e
 
-bin/add_swap
+bin/reset_swap
 yarn
 bin/build
 
@@ -16,8 +16,9 @@ sudo systemctl enable ethiostats.service
 sudo systemctl start ethiostats.service
 
 # configure nginx
-cp .gce/default.nginx /etc/nginx/sites-enabled/default
+sudo cp .gce/default.nginx /etc/nginx/sites-enabled/default
 sudo systemctl restart nginx.service
 
 # ensure certbot renewal is scheduled
 bin/schedule_cert_renewal
+bin/reset_swap
