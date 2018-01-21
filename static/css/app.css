@@ -138,9 +138,11 @@ input.search-hscodes-autocomplete {
     stroke-width: 10px;
   }
 }
+/*
 .c3 line, .c3 path, g.tick line {
   stroke: white !important;
 }
+*/
 .c3-tooltip-container {
   color: black;
 }
